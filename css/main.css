@@ -1,0 +1,46 @@
+@CHARSET "UTF-8";
+
+#error_summary {
+	color: red;
+}
+
+#message {
+	color: blue;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+th, td {
+	border: 1px solid #999;
+	padding: 0.3rem;
+}
+
+td.number {
+	text-align: right;
+}
+
+.empty {
+	background: #f0f0f0;
+}
+
+.container {
+	margin: 0.5rem;
+}
+
+nav li {
+	list-style: none;
+	float: left;
+	margin: 1rem;
+}
+
+#account li {
+	list-style: none;
+	float: right;
+	margin: 1rem;
+}
+
+span .sep {
+	clear: both;
+}
