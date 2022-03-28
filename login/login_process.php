@@ -15,19 +15,24 @@ if (trim(str_replace('　', '', $_POST['password'])) === '') {
 if (count($errors) === 0) {
     try {
         $db = getDb();
-        $sql = "SELECT id, name, email, password FROM users
+        $sql = "SELECT id, name, email, role, active, password FROM users
                 WHERE email = :email";
         $stt = $db->prepare($sql);
         $stt->bindValue(':email', $_POST['email']);
         $stt->execute();
 
         if ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
+            if ($row['active'] != 1) {
+                die('退会中のためログインできません。');
+            }
             $hash_password = $row['password'];
             if (password_verify($_POST['password'], $hash_password)) {
                 $_SESSION['user'] = [
                     'id'    => $row['id'],
                     'name'  => $row['name'],
-                    'email' => $row['email']
+                    'email' => $row['email'],
+                    'role'  => $row['role'],
+                    'active'=> $row['active'],
                 ];
             } else {
                 $errors[] = 'メールアドレスまたはパスワードに誤りがあります。';
