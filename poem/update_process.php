@@ -1,8 +1,12 @@
 <?php
 require_once '../DbManager.php';
 require_once '../Encode.php';
+require_once '../common/auth.php';
 
 session_start();
+
+authenticate();
+authorize($_SESSION['user_id']);
 
 //////////////////////////////
 // POSTデータを$_SESSIONに退避
@@ -55,6 +59,7 @@ try {
     unset($_SESSION['update_id']);
     unset($_SESSION['update_title']);
     unset($_SESSION['update_body']);
+    unset($_SESSION['user_id']);
 
     header('Location: http://' . $_SERVER['HTTP_HOST']
         . dirname($_SERVER['PHP_SELF']) . '/list.php');

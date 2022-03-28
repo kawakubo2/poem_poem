@@ -35,8 +35,8 @@ session_start();
 				<td><?=e($row['body']) ?></td>
 				<td>
 				<?php if (is_login() && $row['user_id'] === $_SESSION['user']['id']) { ?>
-					<a href="update_form.php?id=<?=e($row['id']) ?>">編集</a>
-					<a href="delete_form.php?id=<?=e($row['id']) ?>">削除</a>
+					<a href="update_form.php?id=<?=e($row['id']) ?>&page=poem_list">編集</a>
+					<a href="delete_form.php?id=<?=e($row['id']) ?>&page=poem_list">削除</a>
 				<?php } ?>
 				</td>
 			</tr>

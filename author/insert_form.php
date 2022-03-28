@@ -3,10 +3,7 @@ require_once '../Encode.php';
 require_once '../common/auth.php';
 session_start();
 
-if (!is_login()) {
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/poem_poem/login/login.php');
-    exit();
-}
+authenticate();
 ?>
 <!DOCTYPE html>
 <html>

@@ -1,7 +1,10 @@
 <?php
 require_once '../Encode.php';
+require_once '../common/auth.php';
 
 session_start();
+
+authenticate();
 ?>
 <!DOCTYPE html>
 <html>

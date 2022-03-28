@@ -5,9 +5,7 @@ require_once '../common/auth.php';
 
 session_start();
 
-if (!is_login() || $_GET['id'] !== $_SESSION['user']['id']) {
-    die('<p>このページへのアクセス権限がありません。</p>');
-}
+authenticate();
 
 try {
     $db = getDb();
@@ -28,6 +26,7 @@ try {
             dirname($_SERVER['PHP_SELF']) . '/insert_form.php');
         exit();
     }
+    authorize($_SESSION['user_id']);
 } catch(PDOException $e) {
     die('エラーメッセージ: ' . $e->getMessage());
 }

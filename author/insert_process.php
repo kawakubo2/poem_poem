@@ -1,6 +1,9 @@
 <?php
 require_once '../DbManager.php';
+require_once '../common/auth.php';
 session_start();
+
+authenticate();
 
 $ext = pathinfo($_FILES['profile_image']['name']);
 

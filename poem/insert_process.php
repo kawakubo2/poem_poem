@@ -1,9 +1,11 @@
 <?php
 require_once '../DbManager.php';
 require_once '../Encode.php';
+require_once '../common/auth.php';
 
 session_start();
 
+authenticate();
 //////////////////////////////
 // POSTデータを$_SESSIONに退避
 /////////////////////////////

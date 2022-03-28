@@ -1,23 +1,10 @@
 <?php
 require_once '../DbManager.php';
+require_once '../common/auth.php';
 session_start();
 
-/*
-print('---< $_POST >---');
-print('<pre>');
-print_r($_POST);
-print('</pre>');
-
-print('---< $_FILES >---');
-print('<pre>');
-print_r($_FILES);
-print('</pre>');
-
-print('---< $_SESSION >---');
-print('<pre>');
-print_r($_SESSION);
-print('</pre>');
-*/
+authenticate();
+authorize($_SESSION['user_id']);
 
 if (!isset($_FILES['profile_image'])) {
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/poem_poem/index.php');
@@ -67,6 +54,7 @@ try {
     $stt->bindValue(':profile_filepath', $_FILES['profile_image']['name']);
     $stt->bindValue(':user_id', $_SESSION['user']['id']);
     $stt->execute();
+    unset($_SESSION['user_id']);
 } catch(PDOException $e) {
     die('エラーメッセージ: ' . $e->getMessage());
 }

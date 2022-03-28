@@ -1,17 +1,27 @@
 <?php
 require_once '../Encode.php';
 require_once '../DbManager.php';
+require_once '../common/auth.php';
+
+session_start();
+
+authenticate();
 
 try {
     $db = getDb();
-    $sql = "SELECT id, title, body
-            FROM poems
-            WHERE id = :id";
+    $sql = "SELECT P.id, P.title, P.body, A.user_id
+            FROM poems AS P
+                INNER JOIN authors AS A
+                    ON P.author_id = A.id
+            WHERE P.id = :id";
     $stt = $db->prepare($sql);
     $stt->bindValue(':id', $_GET['id']);
     $stt->execute();
 
     $row = $stt->fetch(PDO::FETCH_ASSOC);
+    $_SESSION['user_id'] = $row['user_id'];
+
+    authorize($_SESSION['user_id']);
 } catch (PDOException $e) {
     die('エラーメッセージ: ' . $e->getMessage());
 }
