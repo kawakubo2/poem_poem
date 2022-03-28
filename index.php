@@ -18,6 +18,9 @@ session_start();
 		<?php if(is_login()) { ?>
 		<nav>
     		<ul>
+    		<?php if (is_admin()) { ?>
+    			<li><a href="user/list.php">ユーザ一覧</a></li>
+    		<?php } ?>
     			<li><a href="author/update_form.php?id=<?=$_SESSION['user']['id'] ?>">作家</a></li>
     			<li><a href="poem/list.php">ポエム</a></li>
     		</ul>
