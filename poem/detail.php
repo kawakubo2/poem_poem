@@ -96,7 +96,7 @@ try {
 		<?php
 		}
 		?>
-		<form method="POST" action="../comment/insert_process.php">
+		<form method="POST" action="/comment/insert_process.php">
 			<input type="hidden" name="poem_id" value="<?=e($_SESSION['insert_poem_id']) ?>" />
 			<label for="comment">コメント: </label>
 			<input type="text" name="comment" />

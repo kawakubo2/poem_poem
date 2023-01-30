@@ -52,5 +52,5 @@ if (count($errors) > 0) {
         . dirname($_SERVER['PHP_SELF']) . '/login.php');
     exit();
 } else {
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/poem_poem/index.php');
+    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/index.php');
 }

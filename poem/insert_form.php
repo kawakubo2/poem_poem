@@ -48,12 +48,12 @@ body {
 			<div class="container">
 				<label for="title">タイトル</label><br>
 				<input type="text" id="title" name="title"
-	    			value="<?=e($_SESSION['insert_title']) ?>" />
+	    			value="<?=e($_SESSION['insert_title'] ?: '') ?>" />
 	        </div>
 	        <div class="container">
 	        	<label for="body">詩</label><br>
 	        	<textarea id="body" name="body"
-	        			rows="20" cols="400"><?=e($_SESSION['insert_body']) ?></textarea>
+	        			rows="20" cols="400"><?=e($_SESSION['insert_body'] ?: '') ?></textarea>
 			</div>
     		<input type="submit" value="登録" />
     	</form>

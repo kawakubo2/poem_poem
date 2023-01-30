@@ -20,7 +20,7 @@ if ($_SESSION['insert_comment'] === '') {
 if (count($errors) > 0) {
     $_SESSION['comment_insert_errors'] = $errors;
     header('Location: http://' . $_SERVER['HTTP_HOST']
-        . '/poem_poem/poem/detail.php');
+        . '/poem/detail.php');
     exit();
 }
 
@@ -37,7 +37,7 @@ try {
     unset($_SESSION['insert_comment']);
 
     header('Location: http://' . $_SERVER['HTTP_HOST']
-        . '/poem_poem/poem/detail.php');
+        . '/poem/detail.php');
     exit();
 
 

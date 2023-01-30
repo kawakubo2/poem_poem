@@ -37,7 +37,7 @@ if (mb_strlen($_SESSION['insert_body']) > 1000) {
 if (count($errors) > 0) {
     $_SESSION['insert_errors'] = $errors;
     header('Location: http://' . $_SERVER['HTTP_HOST']
-        . dirname($_SERVER['PHP_SELF']) . '/insert_form.php');
+        . dirname($_SERVER['PHP_SELF']) . '/list.php');
     exit();
 }
 
@@ -66,7 +66,7 @@ try {
     unset($_SESSION['insert_body']);
 
     header('Location: http://' . $_SERVER['HTTP_HOST']
-        . dirname($_SERVER['PHP_SELF']) . '/insert_form.php');
+        . dirname($_SERVER['PHP_SELF']) . '/list.php');
     exit();
 } catch (PDOException $e) {
     die('エラーメッセージ: ' . $e->getMessage());
