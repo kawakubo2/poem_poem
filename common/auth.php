@@ -26,7 +26,7 @@ function authorize($user_id) {
 
 function get_login_name() {
     if (isset($_SESSION['user'])) {
-        return $_SESSION['user']['name'];
+        return $_SESSION['user']['username'];
     }
     return '';
 }

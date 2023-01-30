@@ -6,7 +6,7 @@ session_start();
 $_SESSION['update_penname'] = $_POST['penname'];
 
 authenticate();
-authorize($_SESSION['user_id']);
+authorize($_SESSION['update_user_id']);
 
 $errors = [];
 if (trim($_SESSION['update_penname']) === '') {
@@ -32,25 +32,30 @@ if (trim($_SESSION['update_penname']) === '') {
     }
 }
 
+if (count($errors) > 0) {
+    $_SESSION['author_update_errors'] = $errors;
+    header('Location: http://' . $_SERVER['HTTP_HOST']
+        . $_SERVER['PHP_SELF'] . '/update_form.php');
+    exit();
+}
 
-if (!isset($_FILES['profile_image'])) {
-    try {
-        $db = getDb();
-        $sql = "UPDATE authors
-            SET penname = :penname
-            WHERE user_id = :user_id";
-        $stt = $db->prepare($sql);
-        $stt->bindValue(':penname', $_SESSION['update_penname']);
-        $stt->bindValue(':user_id', $_SESSION['user']['id']);
-        $stt->execute();
-        unset($_SESSION['update_penname']);
-        unset($_SESSION['user_id']);
-    } catch(PDOException $e) {
-        die('エラーメッセージ: ' . $e->getMessage());
-    }
+try {
+    $db = getDb();
+    $sql = "UPDATE authors
+        SET penname = :penname
+        WHERE user_id = :user_id";
+    $stt = $db->prepare($sql);
+    $stt->bindValue(':penname', $_SESSION['update_penname']);
+    $stt->bindValue(':user_id', $_SESSION['user']['id']);
+    $stt->execute();
+    unset($_SESSION['update_penname']);
+    unset($_SESSION['update_user_id']);
+} catch(PDOException $e) {
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/poem_poem/index.php');
     exit();
-} else {
+}
+
+if (isset($_FILES['profile_image'])) {
     $ext = pathinfo($_FILES['profile_image']['name']);
 
     $perm = ['gif', 'jpg', 'jpeg', 'png'];

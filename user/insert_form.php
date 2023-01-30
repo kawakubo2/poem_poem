@@ -26,14 +26,19 @@ session_start();
 	</ul>
 	<form id="fm" method="POST" action="insert_process.php">
 		<div class="container">
+			<label for="username">ユーザ名:</label><br>
+			<input type="text" id="username" name="username"
+				value="<?=e($_SESSION['insert_username']) ?>" />
+		</div>
+		<div class="container">
     		<label for="name">名前:</label><br>
     		<input type="text" id="name" name="name"
-    			value="<?=e($_SESSION['user_name']) ?>" />
+    			value="<?=e($_SESSION['insert_name']) ?>" />
 		</div>
 		<div class="container">
 			<label for="email">Eメールアドレス:</label><br>
 			<input type="email" id="email" name="email"
-				value="<?=e($_SESSION['user_email']) ?>" />
+				value="<?=e($_SESSION['insert_email']) ?>" />
 		</div>
 		<div class="container">
 			<label for="password">パスワード:</label><br>

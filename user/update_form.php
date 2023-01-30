@@ -5,14 +5,15 @@ require_once '../common/auth.php';
 
 session_start();
 
-if (!is_admin()) {
+if (!(is_admin() || ($_GET['id'] == $_SESSION['user']['id']
+    || $_SESSION['update_id'] == $_SESSION['user']['id']))) {
     die('権限がありません');
 }
 
-if (isset($_GET['page']) && $_GET['page'] === 'list.php') {
+if (isset($_GET['page']) && ($_GET['page'] === 'list.php' || $_GET['page'] === 'index.php')) {
     try {
         $db = getDb();
-        $sql = "SELECT id, name, email, role, active
+        $sql = "SELECT id, username, name, email, profile_filepath, role, active
             FROM users
             WHERE
                 active = 1
@@ -24,10 +25,13 @@ if (isset($_GET['page']) && $_GET['page'] === 'list.php') {
 
         $user = $stt->fetch(PDO::FETCH_ASSOC);
 
-        $_SESSION['update_user_id'] = $user['id'];
-        $_SESSION['update_user_name'] = $user['name'];
-        $_SESSION['update_user_email'] = $user['email'];
-        $_SESSION['update_user_role'] = $user['role'];
+        $_SESSION['update_id'] = $user['id'];
+        $_SESSION['update_username'] = $user['username'];
+        $_SESSION['update_name'] = $user['name'];
+        $_SESSION['update_email'] = $user['email'];
+        $_SESSION['update_old_email'] = $user['email'];
+        $_SESSION['update_profile_filepath'] = $user['profile_filepath'];
+        $_SESSION['update_role'] = $user['role'];
 
     } catch (PDOException $e) {
         die('エラーメッセージ:' . $e->getMessage());
@@ -48,7 +52,7 @@ if (isset($_GET['page']) && $_GET['page'] === 'list.php') {
 	<h2>ユーザ編集</h2>
 	<ul id="error_summary">
 	<?php
-	if (isset($_SESSION['update_user_erros'])) {
+	if (isset($_SESSION['update_user_errors'])) {
 	    foreach($_SESSION['update_user_errors'] as $error) {
 	?>
 			<li><?=$error ?></li>
@@ -58,30 +62,25 @@ if (isset($_GET['page']) && $_GET['page'] === 'list.php') {
 	}
 	?>
 	</ul>
+	<div>
+		<img src="../images/<?=(mb_convert_encoding($_SESSION['update_profile_filepath'], 'SJIS-WIN', 'UTF-8')) ?>" /><br>
+		<a href="image_form.php?id=<?=e($_SESSION['update_id']) ?>&page=update_form.php">画像差替え</a>
+	</div>
 	<form method="POST" action="update_process.php">
+		<div class="container">
+			<label for="username">ユーザ名:</label><br>
+			<input type="text" id="username" name="username"
+						value="<?=e($_SESSION['update_username']) ?>" readonly />
+		</div>
     	<div class="container">
     		<label for="name">名前:</label><br>
     		<input type="text" id="name" name="name"
-    					value="<?=e($_SESSION['update_user_name']) ?>" />
+    					value="<?=e($_SESSION['update_name']) ?>" />
     	</div>
     	<div class="container">
     		<label for="email">Eメールアドレス:</label><br>
     		<input type="text" id="email" name="email"
-    					value="<?=e($_SESSION['update_user_email']) ?>" readonly />
-    	</div>
-    	<div class="container">
-    		<label for="role">ロール:</label><br>
-    		<select id="role" name="role">
-    		<?php
-    		  $roles = ['admin', 'user'];
-    		  foreach ($roles as $role) {
-    		      $prop = ($role === $_SESSION['update_user_role']) ? 'selected': '';
-    	   ?>
-    	   		<option value="<?=e($role) ?>" <?=$prop ?>><?=e($role) ?></option>
-    	   <?php
-    		  }
-    	   ?>
-    	   </select>
+    					value="<?=e($_SESSION['update_email']) ?>" />
     	</div>
     	<div class="container">
     		<input type="submit" value="更新" />

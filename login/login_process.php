@@ -15,7 +15,7 @@ if (trim(str_replace('　', '', $_POST['password'])) === '') {
 if (count($errors) === 0) {
     try {
         $db = getDb();
-        $sql = "SELECT id, name, email, role, active, password FROM users
+        $sql = "SELECT id, username, name, email, role, active, password FROM users
                 WHERE email = :email";
         $stt = $db->prepare($sql);
         $stt->bindValue(':email', $_POST['email']);
@@ -29,6 +29,7 @@ if (count($errors) === 0) {
             if (password_verify($_POST['password'], $hash_password)) {
                 $_SESSION['user'] = [
                     'id'    => $row['id'],
+                    'username' => $row['username'],
                     'name'  => $row['name'],
                     'email' => $row['email'],
                     'role'  => $row['role'],

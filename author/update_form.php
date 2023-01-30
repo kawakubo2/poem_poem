@@ -22,12 +22,8 @@ try {
         $_SESSION['update_penname'] = $row['penname'];
         $_SESSION['update_old_penname'] = $row['penname'];
         $_SESSION['update_profile_filepath'] = $row['profile_filepath'];
-    } else {
-        header('Location: http://' . $_SERVER['HTTP_HOST'] .
-            dirname($_SERVER['PHP_SELF']) . '/insert_form.php');
-        exit();
     }
-    authorize($_SESSION['user_id']);
+    authorize($_SESSION['update_user_id']);
 } catch(PDOException $e) {
     die('エラーメッセージ: ' . $e->getMessage());
 }

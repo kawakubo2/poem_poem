@@ -11,7 +11,7 @@ if (!is_admin()){
 
 try {
     $db = getDb();
-    $sql = "SELECT id, name, email, role
+    $sql = "SELECT id, username, name, email, role
             FROM users
             WHERE active = 1";
     $stt = $db->prepare($sql);
@@ -46,17 +46,23 @@ try {
   <a class="btn btn-primary" href="insert_form.php">新規登録</a>
   <table class="table">
   <tr>
-       <th>ID</th><th>名前<th>Email</th><th>ロール</th><th colspan="2"></th>
+       <th>ID</th><th>ユーザ名</th><th>名前<th>Email</th><th>ロール</th><th colspan="2"></th>
        </tr>
        <?php
        while ($row =$stt->fetch(PDO::FETCH_ASSOC)){
        ?>
            <tr>
-               <td><?=e($row['id'])?></td>
-               <td><?=e($row['name'])?></td>
-               <td><?=e($row['email'])?></td>
-               <td><?=e($row['role'])?></td>
-               <td><a href="update_form.php?id=<?=$row['id'] ?>&page=list.php">編集</a></td>
+               <td><?=e($row['id']) ?></td>
+               <td><?=e($row['username']) ?></td>
+               <td><?=e($row['name']) ?></td>
+               <td><?=e($row['email']) ?></td>
+               <td><?=e($row['role']) ?></td>
+               <td>
+               <?php if ($row['id'] === $_SESSION['user']['id']) { ?>
+               		<a href="update_form.php?id=<?=$row['id'] ?>&page=list.php">編集</a>
+               <?php }?>
+               </td>
+               <td><a href="/poem_poem/role/update_form.php?id=<?=$row['id'] ?>&page=list.php">ロール変更</a></td>
                <td><a href="delete_form.php?id=<?=$row['id'] ?>&page=list.php">削除</a></td>
            </tr>
        <?php

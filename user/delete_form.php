@@ -9,7 +9,7 @@ if (!is_admin()) {
 
 try {
     $db = getDb();
-    $sql = "SELECT id, name, email, role
+    $sql = "SELECT id, username, name, email, role
             FROM users
             WHERE
                 active = 1
@@ -37,6 +37,7 @@ try {
 	<h2>ユーザ削除</h2>
 	<table class="table">
 		<tr><th>id</th><td><?=e($user['id']) ?></td></tr>
+		<tr><th>ユーザ名<td><?=e($user['username']) ?></td></tr>
 		<tr><th>名前</th><td><?=e($user['name']) ?></td></tr>
 		<tr><th>Eメールアドレス</th><td><?=e($user['email']) ?></td></tr>
 		<tr><th>ロール</th><td><?=e($user['role']) ?></td></tr>
