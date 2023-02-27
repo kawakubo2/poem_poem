@@ -13,19 +13,6 @@ footer {
 	color: blue;
 }
 
-table {
-	border-collapse: collapse;
-}
-
-th, td {
-	border: 1px solid #999;
-	padding: 0.3rem;
-}
-
-td.number {
-	text-align: right;
-}
-
 .empty {
 	background: #f0f0f0;
 }
@@ -59,9 +46,9 @@ div.comment {
 }
 
 #poem-poem-top main {
-	width: 800px;
-	height: 300px;
-	margin: 0 0 0 3rem;
+	width: 600px;
+	height: 200px;
+	margin: 4rem 0 0 3rem;
 	background-image: url(/images/deer.jpg);
 
 }

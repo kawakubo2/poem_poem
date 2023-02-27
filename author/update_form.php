@@ -58,7 +58,7 @@ try {
 		</div>
 		<div class="container">
 			<label for="profile_image">プロフィール写真:</label><br>
-			<img src="../images/<?=$_SESSION['update_profile_filepath'] ?>" width="300" />
+			<img src="/images/<?=$_SESSION['update_profile_filepath'] ?>" width="300" />
 			<input type="file" id="profile_image" name="profile_image" />
 		</div>
 		<div class="container">

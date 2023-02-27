@@ -27,7 +27,7 @@ try {
     <meta charset="UTF-8"/>
     <title>ユーザー一覧｜Poem World</title>
 	<link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-	<link type="text/css" rel="stylesheet" href="css/main.css" />
+	<link type="text/css" rel="stylesheet" href="/css/main.css" />
 </head>
 <body>
   <h3>ユーザー一覧</h3>
@@ -62,7 +62,7 @@ try {
                		<a href="update_form.php?id=<?=$row['id'] ?>&page=list.php">編集</a>
                <?php }?>
                </td>
-               <td><a href="/poem_poem/role/update_form.php?id=<?=$row['id'] ?>&page=list.php">ロール変更</a></td>
+               <td><a href="/role/update_form.php?id=<?=$row['id'] ?>&page=list.php">ロール変更</a></td>
                <td><a href="delete_form.php?id=<?=$row['id'] ?>&page=list.php">削除</a></td>
            </tr>
        <?php

@@ -32,7 +32,6 @@ authorize($_SESSION['user_id']);
 <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 <style>
 body {
-    // background-image: url('../images/gazou060.JPG');
     background-size: cover;
 }
 #p1 {

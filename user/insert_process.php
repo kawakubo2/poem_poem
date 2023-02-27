@@ -61,7 +61,7 @@ if (mb_strlen($password) < 8 || mb_strlen($password) > 20) {
 if (count($errors) > 0) {
     $_SESSION['insert_insert_errors'] = $errors;
     header('Location: http://' . $_SERVER['HTTP_HOST']
-        . dirname($_SERVER['PHP_SELF']) . '/insert_form.php');
+        .  '/user/insert_form.php');
     exit();
 }
 
@@ -84,4 +84,4 @@ try {
     die('エラーメッセージ: ' . $e->getMessage());
 }
 
-header('Location: http://' . $_SERVER['HTTP_HOST'] . '/poem_poem/index.php');
+header('Location: http://' . $_SERVER['HTTP_HOST'] . '/index.php');

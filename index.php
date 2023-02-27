@@ -13,8 +13,8 @@ session_start();
 </head>
 <body id="poem-poem-top">
 	<header>
-    	<!-- <img src="images/logo.gif" alt="ロゴ画像" /> -->
     	<h1>Poem World トップページ</h1>
+
 		<?php if(is_login()) { ?>
 		<nav>
     		<ul>
@@ -35,10 +35,10 @@ session_start();
 		<section id="account">
 			<ul>
 			<?php if (is_login()) { ?>
-				<li><a class="btn btn-primary" href="login/logout.php">ログアウト</a></li>
+				<li><a class="btn btn-primary" href="/login/logout.php">ログアウト</a></li>
 			<?php } else { ?>
-				<li><a class="btn btn-secondary" href="user/insert_form.php">アカウント作成</a></li>
-				<li><a class="btn btn-primary" href="login/login.php">ログイン</a></li>
+				<li><a class="btn btn-secondary" href="/user/insert_form.php">アカウント作成</a></li>
+				<li><a class="btn btn-primary" href="/login/login.php">ログイン</a></li>
 			<?php } ?>
 			</ul>
 			<span class="sep"></span>

@@ -8,7 +8,7 @@ session_start();
 <head>
 	<meta charset="UTF-8" />
 	<title>ユーザ新規登録 | Poem World</title>
-	<link type="text/css" rel="stylesheet" href="../css/main.css" />
+	<link type="text/css" rel="stylesheet" href="/css/main.css" />
 	<script type="text/javascript" src="../jquery-3.6.0.min.js"></script>
 	<script type="text/javascript" src="insert_form.js"></script>
 </head>
