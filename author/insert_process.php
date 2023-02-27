@@ -80,4 +80,4 @@ try {
     die('エラーメッセージ: ' . $e->getMessage());
 }
 
-header('Location: http://' . $_SERVER['HTTP_HOST'] . '/poem_poem/index.php');
+header('Location: http://' . $_SERVER['HTTP_HOST'] . '/index.php');

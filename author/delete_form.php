@@ -30,7 +30,7 @@ if (isset($_GET['page']) && $_GET['page'] === 'list.php') {
 	<meta charset="UTF-8" />
 	<title>作家削除 | Poem World</title>
 	<link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-	<link type="text/css" rel="stylesheet" href="css/main.css" />
+	<link type="text/css" rel="stylesheet" href="/css/main.css" />
 </head>
 <body>
 	<a class="btn btn-info" href="list.php">一覧へ戻る</a>
@@ -38,7 +38,7 @@ if (isset($_GET['page']) && $_GET['page'] === 'list.php') {
 	<table class="table">
 		<tr><th>id</th><td><?=e($row['id']) ?></td></tr>
 		<tr><th>ペンネーム</th><td><?=e($row['penname']) ?></td></tr>
-		<tr><th>写真</th><td><img src="../images/<?=e($row['profile_filepath']) ?>" width="200" /></td></tr>
+		<tr><th>写真</th><td><img src="/images/<?=e($row['profile_filepath']) ?>" width="200" /></td></tr>
 	</table>
 	<form method="POST" action="delete_process.php">
 		<input type="hidden" name="id" value="<?=e($row['id']) ?>" />

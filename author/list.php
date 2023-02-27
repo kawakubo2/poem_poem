@@ -20,7 +20,7 @@ try {
 <head>
 	<meta charset="UTF-8" />
 	<title>作家一覧 | Poem World</title>
-	<link type="text/css" rel="stylesheet" href="../css/main.css" />
+	<link type="text/css" rel="stylesheet" href="/css/main.css" />
 	<link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 </head>
 <body>
@@ -36,7 +36,7 @@ try {
 			<tr>
 				<td><?=e($row['id']) ?></td>
 				<td><?=e($row['penname']) ?></td>
-				<td><img src="../images/<?=e($row['profile_filepath']) ?>" width="200"
+				<td><img src="/images/<?=e($row['profile_filepath']) ?>" width="200"
 						alt="<?=e($row['penname']) ?>のプロフィール写真" /></td>
 				<td>
 					<a class="btn btn-danger" href="delete_form.php?id=<?=e($row['id']) ?>&page=list.php">削除</a>
