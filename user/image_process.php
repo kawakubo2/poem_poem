@@ -38,8 +38,7 @@ if (isset($_FILES['upfile'])) {
     }
     if (count($errors) > 0) {
         $_SESSION['upload_errors'] = $errors;
-        header('Location: http://' . $_SERVER['HTTP_HOST']
-            . dirname($_SERVER['PHP_SELF']) . '/image_form.php');
+        header('Location: http://' . $_SERVER['HTTP_HOST'] . '/user/image_form.php');
         exit(1);
     }
     try {
@@ -52,10 +51,10 @@ if (isset($_FILES['upfile'])) {
         $stt->bindValue(':id', $_SESSION['upload_user_id']);
         $stt->execute();
     } catch (PDOException $e) {
-        unlink('../images/' . $dest);
-        die("エラーメッセージ: " .  $e.getMessage());
+        unlink('/images/' . $dest);
+        die("エラーメッセージ: " .  $e->getMessage());
     }
-    $_SESSION['upload_message'] = '画像の' . $_POST['process_name'] .'に成功しました。';
-    header('Location: http://' . $_SERVER['HTTP_HOST']
-        . dirname($_SERVER['PHP_SELF']) . '/image_form.php');
+    $_SESSION['upload_message'] = '画像' . $_POST['process_name'] .'のアップロードに成功しました。';
+    // 2023-03-06 $_SESSION['page']から'/user/.php'へ変更
+    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/user/image_form.php');
 }

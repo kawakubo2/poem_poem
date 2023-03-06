@@ -10,7 +10,9 @@ if (!(is_admin() || ($_GET['id'] == $_SESSION['user']['id']
     die('権限がありません');
 }
 
-if (isset($_GET['page']) && ($_GET['page'] === 'list.php' || $_GET['page'] === 'index.php')) {
+if (isset($_GET['page']) && 
+		(
+			$_GET['page'] === 'list.php' || $_GET['page'] === 'index.php')) {
     try {
         $db = getDb();
         $sql = "SELECT id, username, name, email, profile_filepath, role, active
@@ -63,8 +65,8 @@ if (isset($_GET['page']) && ($_GET['page'] === 'list.php' || $_GET['page'] === '
 	?>
 	</ul>
 	<div>
-		<img src="../images/<?=(mb_convert_encoding($_SESSION['update_profile_filepath'], 'SJIS-WIN', 'UTF-8')) ?>" /><br>
-		<a href="image_form.php?id=<?=e($_SESSION['update_id']) ?>&page=update_form.php">画像差替え</a>
+		<img src="/images/<?=(mb_convert_encoding($_SESSION['update_profile_filepath'], 'SJIS-WIN', 'UTF-8')) ?>" /><br>
+		<a href="image_form.php?id=<?=e($_SESSION['update_id']) ?>&page=/user/update_form.php">画像差替え</a>
 	</div>
 	<form method="POST" action="update_process.php">
 		<div class="container">

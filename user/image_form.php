@@ -75,7 +75,7 @@ try {
 		<input type="submit" value="<?=$filepath ? "更新": "登録" ?>" />
 	</form>
 	<?php if ($filepath ) { ?>
-		<img src="../images/<?=(mb_convert_encoding($filepath, 'SJIS-WIN', 'UTF-8')) ?>" />
+		<img src="/images/<?=(mb_convert_encoding($filepath, 'SJIS-WIN', 'UTF-8')) ?>" />
 	<?php } ?>
 </main>
 </body>
