@@ -50,7 +50,11 @@ if (isset($_GET['page']) &&
 	<link type="text/css" rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-	<a href="list.php">一覧へ戻る</a>
+	<a href="../index.php"><img src="/images/poem_world.png" /></a>
+	<?php if (is_admin()) { ?>
+		<a href="list.php">一覧へ戻る</a>
+	<?php } ?>
+
 	<h2>ユーザ編集</h2>
 	<ul id="error_summary">
 	<?php

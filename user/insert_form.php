@@ -13,6 +13,10 @@ session_start();
 	<script type="text/javascript" src="insert_form.js"></script>
 </head>
 <body>
+	<a href="../index.php"><img src="/images/poem_world.png" /></a>
+	<?php if (is_admin()) { ?>
+		<a href="list.php">一覧へ戻る</a>
+	<?php } ?>
 	<h3>ユーザ新規登録</h3>
 	<ul id="error_summary">
 	<?php

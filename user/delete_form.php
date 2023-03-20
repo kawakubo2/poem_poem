@@ -33,7 +33,10 @@ try {
 	<link type="text/css" rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-	<a class="btn btn-info" href="list.php">一覧へ戻る</a>
+	<a href="../index.php"><img src="/images/poem_world.png" /></a>
+	<?php if (is_admin()) { ?>
+		<a href="list.php">一覧へ戻る</a>
+	<?php } ?>
 	<h2>ユーザ削除</h2>
 	<table class="table">
 		<tr><th>id</th><td><?=e($user['id']) ?></td></tr>
