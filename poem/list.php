@@ -75,6 +75,9 @@ session_start();
     				<td><?=e($row['body']) ?></td>
     				<td>
     				<?php if (is_login()) { ?>
+    					<a href="favorite.php?id=<?=e($row['id']) ?>&page=poem_list">お気に入り登録</a>
+    				<?php } ?>
+    				<?php if (is_login()) { ?>
     					<a href="detail.php?id=<?=e($row['id']) ?>&page=poem_list">コメント</a>
     				<?php } ?>
     				<?php if (is_login() && $row['user_id'] === $_SESSION['user']['id']) { ?>
