@@ -14,6 +14,8 @@ session_start();
 </head>
 <body>
 	<header>
+        <a href="../index.php"><img src="/images/poem_world.png" /></a>
+    	<h3>お気に入り一覧</h3>
     	<h3>詩の一覧</h3>
     	<p><a href="insert_form.php">詩の登録</a>
     	<?php
@@ -44,14 +46,23 @@ session_start();
     	</form>
     	<table class="table">
     		<thead>
-    			<tr><th>タイトル</th><th>ペンネーム</th><th>詩</th><th></th></tr>
+    			<tr><th>タイトル</th><th>ペンネーム</th><th>詩</th><th>お気に入り数</th><th></th></tr>
     		</thead>
     		<tbody>
     		<?php
     		$db = getDb();
-    		$sql = "SELECT P.id, P.title, A.penname, P.body, A.user_id
+    		$sql = "SELECT P.id, P.title, A.penname, P.body, A.user_id, F.id AS favorite_id, FAV.fav_count
                     FROM poems AS P
                         INNER JOIN authors AS A ON P.author_id = A.id
+					    LEFT OUTER JOIN favorites AS F ON P.id = F.poem_id
+						LEFT OUTER JOIN
+						(
+							SELECT poem_id, count(*) AS fav_count
+							FROM favorites
+							WHERE user_id = :user_id -- 2023-04-17授業後修正
+							GROUP BY poem_id
+						) AS FAV
+							ON P.id = FAV.poem_id
                     WHERE 1 = 1";
     		if (isset($_GET['penname']) && $_GET['penname'] !== '') {
     		    $sql .= " AND P.author_id = :author_id";
@@ -60,6 +71,7 @@ session_start();
     		    $sql .= " AND P.title LIKE :title";
     		}
     		$stt = $db->prepare($sql);
+			$stt->bindValue(':user_id', $_SESSION['user']['id']);
     		if (isset($_GET['penname']) && $_GET['penname'] !== '') {
     		    $stt->bindValue(':author_id', $_GET['penname']);
     		}
@@ -73,10 +85,17 @@ session_start();
     				<td><?=e($row['title']) ?></td>
     				<td><?=e($row['penname']) ?></td>
     				<td><?=e($row['body']) ?></td>
+					<td><?=($row['fav_count'] === null) ? "": e($row['fav_count']) ?></td>
     				<td>
-    				<?php if (is_login()) { ?>
-    					<a href="../favorite/favorite.php?id=<?=e($row['id']) ?>&page=poem_list">お気に入り登録</a>
-    				<?php } ?>
+    				<?php 
+						if (is_login()) { 
+							if ($row['favorite_id']) { 	
+					?>
+								<span>お気に入り登録済</span>
+							<?php } else { ?>
+								<a href="../favorite/favorite.php?id=<?=e($row['id']) ?>&page=poem_list">お気に入り登録</a>
+							<?php } 
+					    } ?>
     				<?php if (is_login()) { ?>
     					<a href="detail.php?id=<?=e($row['id']) ?>&page=poem_list">コメント</a>
     				<?php } ?>
