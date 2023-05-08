@@ -51,18 +51,23 @@ session_start();
     		<tbody>
     		<?php
     		$db = getDb();
-    		$sql = "SELECT P.id, P.title, A.penname, P.body, A.user_id, F.id AS favorite_id, FAV.fav_count
+    		$sql = "SELECT P.id, P.title, A.penname, P.body, A.user_id, R.poem_id AS favorite, FAV.fav_count
                     FROM poems AS P
                         INNER JOIN authors AS A ON P.author_id = A.id
-					    LEFT OUTER JOIN favorites AS F ON P.id = F.poem_id
 						LEFT OUTER JOIN
 						(
 							SELECT poem_id, count(*) AS fav_count
 							FROM favorites
-							WHERE user_id = :user_id -- 2023-04-17授業後修正
 							GROUP BY poem_id
 						) AS FAV
 							ON P.id = FAV.poem_id
+						LEFT OUTER JOIN
+						(
+							SELECT poem_id
+							FROM favorites
+							WHERE user_id = :user_id
+						) AS R
+							ON P.id = R.poem_id
                     WHERE 1 = 1";
     		if (isset($_GET['penname']) && $_GET['penname'] !== '') {
     		    $sql .= " AND P.author_id = :author_id";
@@ -89,13 +94,14 @@ session_start();
     				<td>
     				<?php 
 						if (is_login()) { 
-							if ($row['favorite_id']) { 	
+							if ($row['favorite']) { 	
 					?>
 								<span>お気に入り登録済</span>
-							<?php } else { ?>
-								<a href="../favorite/favorite.php?id=<?=e($row['id']) ?>&page=poem_list">お気に入り登録</a>
-							<?php } 
-					    } ?>
+					<?php 	} else { ?>
+							<a href="../favorite/favorite.php?id=<?=e($row['id']) ?>&page=poem_list">お気に入り登録</a>
+					<?php 	} 
+					    } 
+					?>
     				<?php if (is_login()) { ?>
     					<a href="detail.php?id=<?=e($row['id']) ?>&page=poem_list">コメント</a>
     				<?php } ?>
