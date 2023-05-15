@@ -39,6 +39,7 @@ function get_login_id() {
 }
 
 function is_admin() {
+    if (!isset($_SESSION['user'])) return false;
     return $_SESSION['user']['role'] === 'admin';
 }
 

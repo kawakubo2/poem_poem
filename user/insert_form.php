@@ -1,5 +1,6 @@
 <?php
 require_once '../Encode.php';
+require_once '../common/auth.php';
 
 session_start();
 ?>
@@ -32,17 +33,17 @@ session_start();
 		<div class="container">
 			<label for="username">ユーザ名:</label><br>
 			<input type="text" id="username" name="username"
-				value="<?=e($_SESSION['insert_username']) ?>" />
+				value="<?=e(isset($_SESSION['insert_username']) ? $_SESSION['insert_username'] : '') ?>" />
 		</div>
 		<div class="container">
     		<label for="name">名前:</label><br>
     		<input type="text" id="name" name="name"
-    			value="<?=e($_SESSION['insert_name']) ?>" />
+    			value="<?=e(isset($_SESSION['insert_name']) ? $_SESSION['insert_name'] : '') ?>" />
 		</div>
 		<div class="container">
 			<label for="email">Eメールアドレス:</label><br>
 			<input type="email" id="email" name="email"
-				value="<?=e($_SESSION['insert_email']) ?>" />
+				value="<?=e(isset($_SESSION['insert_email']) ? $_SESSION['insert_email'] : '') ?>" />
 		</div>
 		<div class="container">
 			<label for="password">パスワード:</label><br>
