@@ -35,7 +35,7 @@ if (trim($_SESSION['update_penname']) === '') {
 if (count($errors) > 0) {
     $_SESSION['author_update_errors'] = $errors;
     header('Location: http://' . $_SERVER['HTTP_HOST']
-        . $_SERVER['PHP_SELF'] . '/update_form.php');
+        . '/author/update_form.php');
     exit();
 }
 
@@ -106,7 +106,7 @@ if (isset($_FILES['profile_image'])) {
         die('エラーメッセージ: ' . $e->getMessage());
     }
 
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/poem_poem/index.php');
+    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/index.php');
 
 }
 

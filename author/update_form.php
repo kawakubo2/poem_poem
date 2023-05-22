@@ -54,11 +54,11 @@ try {
 		<div class="container">
     		<label for="penname">ペンネーム:</label><br>
     		<input type="text" id="penname" name="penname"
-    			value="<?=e($_SESSION['update_penname']) ?>" />
+    			value="<?=isset($_SESSION['update_penname']) ? e($_SESSION['update_penname']) : '' ?>" />
 		</div>
 		<div class="container">
 			<label for="profile_image">プロフィール写真:</label><br>
-			<img src="/images/<?=$_SESSION['update_profile_filepath'] ?>" width="300" />
+			<img src="/images/<?=isset($_SESSION['update_profile_filepath']) ? e($_SESSION['update_profile_filepath']) : '' ?>" width="300" />
 			<input type="file" id="profile_image" name="profile_image" />
 		</div>
 		<div class="container">

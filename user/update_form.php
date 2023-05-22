@@ -70,23 +70,23 @@ if (isset($_GET['page']) &&
 	</ul>
 	<div>
 		<img src="/images/<?=(mb_convert_encoding($_SESSION['update_profile_filepath'], 'SJIS-WIN', 'UTF-8')) ?>" /><br>
-		<a href="image_form.php?id=<?=e($_SESSION['update_id']) ?>&page=/user/update_form.php">画像差替え</a>
+		<a href="image_form.php?id=<?=isset($_SESSION['update_id']) ? e($_SESSION['update_id']) : '' ?>&page=/user/update_form.php">画像差替え</a>
 	</div>
 	<form method="POST" action="update_process.php">
 		<div class="container">
 			<label for="username">ユーザ名:</label><br>
 			<input type="text" id="username" name="username"
-						value="<?=e($_SESSION['update_username']) ?>" readonly />
+						value="<?=isset($_SESSION['update_username']) ? e($_SESSION['update_username']) : '' ?>" readonly />
 		</div>
     	<div class="container">
     		<label for="name">名前:</label><br>
     		<input type="text" id="name" name="name"
-    					value="<?=e($_SESSION['update_name']) ?>" />
+    					value="<?=isset($_SESSION['update_name']) ? e($_SESSION['update_name']) : '' ?>" />
     	</div>
     	<div class="container">
     		<label for="email">Eメールアドレス:</label><br>
     		<input type="text" id="email" name="email"
-    					value="<?=e($_SESSION['update_email']) ?>" />
+    					value="<?=isset($_SESSION['update_email']) ? e($_SESSION['update_email']) : '' ?>" />
     	</div>
     	<div class="container">
     		<input type="submit" value="更新" />

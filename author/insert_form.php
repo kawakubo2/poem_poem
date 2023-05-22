@@ -31,12 +31,12 @@ authenticate();
 		<div class="container">
     		<label for="penname">ペンネーム:</label><br>
     		<input type="text" id="penname" name="penname"
-    			value="<?=e(isset($_SESSION['insert_penname'])? $_SESSION['insert_penname']: '') ?>" />
+    			value="<?=isset($_SESSION['insert_penname'])? e($_SESSION['insert_penname']): '' ?>" />
 		</div>
 		<div class="container">
 			<label for="profile_image">プロフィール写真:</label><br>
 			<input type="file" id="profile_image" name="profile_image"
-				value="<?=e(isset($_SESSION['insert_profile_image']) ? $_SESSION['insert_profile_image']: '') ?>" />
+				value="<?=isset($_SESSION['insert_profile_image']) ? e($_SESSION['insert_profile_image']): '' ?>" />
 		</div>
 		<div class="container">
 			<input type="hidden" name="max_file_size" value="1000000" />
