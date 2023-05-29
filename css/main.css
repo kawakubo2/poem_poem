@@ -52,3 +52,7 @@ div.comment {
 	background-image: url(/images/deer.jpg);
 
 }
+
+.section-center {
+	margin: 1rem auto;
+}

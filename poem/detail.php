@@ -47,21 +47,24 @@ try {
 	}
 	?>
 	</ul>
-	<table>
+	<table id="author_profile" class="table">
 		<tr>
 			<th>作家名</th>
 			<td><?=e($row['penname']) ?></td>
-			<td><img src="../images/<?=e($row['profile_filepath']) ?>" alt="<?=e($row['penname']) ?>" height="50" /></td>
+			<td><img src="/images/<?=e($row['profile_filepath']) ?>" alt="<?=e($row['penname']) ?>" height="100" /></td>
 		</tr>
 		<tr>
 			<td colspan="3">
-<pre>
+
+<basefont size="3">
+<pre class="poem-font-size">
 <?=e($row['body']) ?>
 </pre>
+</basefont>
 			</td>
 		</tr>
 	</table>
-	<section>
+	<section class="section-center">
 		<h3>コメント</h3>
 		<?php
 		try {
@@ -99,10 +102,10 @@ try {
 		<form method="POST" action="/comment/insert_process.php">
 			<input type="hidden" name="poem_id" value="<?=e($_SESSION['insert_poem_id']) ?>" />
 			<label for="comment">コメント: </label>
-			<input type="text" name="comment" />
+			<textarea rows="5" cols="40"
+				name="comment" id="comment"></textarea>
 			<input type="submit" value="追加" />
 		</form>
 	</section>
-
 </body>
 </html>
