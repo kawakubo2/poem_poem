@@ -1,6 +1,7 @@
 <?php
 require_once '../DbManager.php';
 require_once '../Encode.php';
+require_once '../common/auth.php';
 
 session_start();
 
@@ -39,7 +40,9 @@ try {
 				<td><img src="/images/<?=e($row['profile_filepath']) ?>" width="200"
 						alt="<?=e($row['penname']) ?>のプロフィール写真" /></td>
 				<td>
-					<a class="btn btn-danger" href="delete_form.php?id=<?=e($row['id']) ?>&page=list.php">削除</a>
+					<?php if (is_admin()) { ?>
+						<a class="btn btn-danger" href="delete_form.php?id=<?=e($row['id']) ?>&page=list.php">削除</a>
+					<?php } ?>
 				</td>
 			</tr>
 		<?php
