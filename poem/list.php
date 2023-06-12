@@ -51,7 +51,7 @@ session_start();
     		<tbody>
     		<?php
     		$db = getDb();
-    		$sql = "SELECT P.id, P.title, A.penname, P.body, A.user_id, R.poem_id AS favorite, FAV.fav_count
+    		$sql = "SELECT P.id, P.title, A.id AS author_id, A.penname, P.body, A.user_id, R.poem_id AS favorite, FAV.fav_count
                     FROM poems AS P
                         INNER JOIN authors AS A ON P.author_id = A.id
 						LEFT OUTER JOIN
@@ -99,8 +99,12 @@ session_start();
 								<span>お気に入り登録済</span>
 					<?php 	} else { ?>
 							<a href="../favorite/favorite.php?id=<?=e($row['id']) ?>&page=poem_list">お気に入り登録</a>
-					<?php 	} 
-					    } 
+					<?php
+							}
+					?>
+							<a href="../author/detail.php?author_id=<?=$row['author_id'] ?>">作家</a>
+					<?php
+						}	
 					?>
     				<?php if (is_login()) { ?>
     					<a href="detail.php?id=<?=e($row['id']) ?>&page=poem_list">コメント</a>
