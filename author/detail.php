@@ -14,3 +14,24 @@ try {
 } catch (PDOException $e) {
     die('エラーメッセージ: ' . $e->getMessage());
 }
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>作家詳細 | Poem World</title>
+    <link type="text/css" rel="stylesheet" href="/css/main.css" />
+	<link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+</head>
+<body>
+    <a href="../index.php"><img src="/images/poem_world.png" /></a>
+    <?php if (is_admin()) { ?>
+        <a href="list.php">一覧へ戻る</a>
+    <?php } ?>
+    <h2>作家詳細</h2>
+    <table class="table">
+        <tr><th>ペンネーム</th><td><?=e($row['penname']) ?></td></tr>
+        <tr><th></th><td><img src="../images/<?=e($row['profile_filepath']) ?>" /></td></tr>
+    </table>
+</body>
+</html>
