@@ -41,7 +41,7 @@ try {
         <a href="../poem/list.php">一覧へ戻る</a>
     <?php } ?>
     <h2>作家詳細</h2>
-    <a href="../friend/insert_form.php">友達申請</a>
+    <a href="../friend/insert_form.php?author_id=<?=$_GET['author_id'] ?>">友達申請</a>
     <table class="table">
         <tr><th>ペンネーム</th><td><?=e($row['penname']) ?></td></tr>
         <tr><th></th><td><img src="../images/<?=e($row['profile_filepath']) ?>" /></td></tr>

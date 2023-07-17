@@ -15,9 +15,16 @@ session_start();
 <body>
 	<header>
         <a href="../index.php"><img src="/images/poem_world.png" /></a>
-    	<h3>お気に入り一覧</h3>
     	<h3>詩の一覧</h3>
     	<p><a href="insert_form.php">詩の登録</a>
+		<p id="error_summary">
+		<?php
+			if ($_SESSION['message']) {
+				print($_SESSION['message']);
+				unset($_SESSION['message']);
+			}
+		?>
+		</p>
     	<?php
     	try {
     	   $db = getDb();
