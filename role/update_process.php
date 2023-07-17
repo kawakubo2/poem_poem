@@ -27,7 +27,7 @@ try {
     unset($_SESSION['role_update_role']);
 
     header('Location: http://' . $_SERVER['HTTP_HOST']
-        . '/poem_poem/user/list.php');
+        . '/user/list.php');
     exit();
 } catch (PDOException $e) {
     die('エラーメッセージ: ' . $e->getMessage());
