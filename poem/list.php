@@ -58,9 +58,16 @@ session_start();
     		<tbody>
     		<?php
     		$db = getDb();
-    		$sql = "SELECT P.id, P.title, A.id AS author_id, A.penname, P.body, A.user_id, R.poem_id AS favorite, FAV.fav_count
+    		$sql = "SELECT P.id, P.title, A.id AS author_id, A.penname, P.body, A.user_id, FRI.is_friend, R.poem_id AS favorite, FAV.fav_count
                     FROM poems AS P
                         INNER JOIN authors AS A ON P.author_id = A.id
+						LEFT OUTER JOIN
+						(
+							SELECT author_id, is_friend 
+							FROM friends
+							WHERE user_id = :user_id
+						) AS FRI
+							ON A.id = FRI.author_id
 						LEFT OUTER JOIN
 						(
 							SELECT poem_id, count(*) AS fav_count
@@ -108,9 +115,11 @@ session_start();
 							<a href="../favorite/favorite.php?id=<?=e($row['id']) ?>&page=poem_list">お気に入り登録</a>
 					<?php
 							}
+							if ($row['is_friend'] === NULL) {
 					?>
 							<a href="../author/detail.php?author_id=<?=$row['author_id'] ?>">作家</a>
 					<?php
+							}
 						}	
 					?>
     				<?php if (is_login()) { ?>

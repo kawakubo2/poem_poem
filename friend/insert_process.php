@@ -16,7 +16,7 @@ try {
     $stt->execute();
     if ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
         $_SESSION['message'] = '既に友達申請しています。';
-        header('Location: http://localhost/peom/list.php');
+        header('Location: http://localhost:3000/poem/list.php');
         exit();
     }
     $sql = "INSERT INTO friends(user_id, author_id, memo, is_friend)
@@ -26,6 +26,8 @@ try {
     $stt->bindValue(':author_id', $_POST['author_id']);
     $stt->bindValue(':memo', $_POST['memo']);
     $stt->execute();
+    header('Location: http://localhost:3000/poem/list.php');
+    exit();
 } catch(PDOException $e) {
     die('エラーメッセージ: ' . $e->getMessage());
 }
