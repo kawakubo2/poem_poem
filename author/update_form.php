@@ -98,8 +98,12 @@ try {
 			</tr>	
 		</thead>
 		<tbody>
-
-
+<?php while($row = $stt->fetch(PDO::FETCH_ASSOC)) { ?>
+			<tr>
+				<td><?=e($row['username']) ?></td>
+				<td><a href="update_form.php?user_id=<?=e($row['friend_user_id']) ?>&author_id=<?=e($row['friend_author_id']) ?></td>
+			</tr>
+<?php } ?>
 		</tbody>
 	</table>
 	</div>
