@@ -67,5 +67,41 @@ try {
 			<input type="submit" value="更新" />
 		</div>
 	</form>
+	<hr>
+	<div>
+		<h3>友達申請</h3>
+<?php
+try {
+	$db = getDb();
+	$sql = "SELECT U.username, F.user_id AS friend_user_id, 
+				   F.author_id AS friend_author_id
+			FROM friends AS F
+				INNER JOIN users AS U ON F.user_id = U.id
+			WHERE F.author_id = 
+				(
+					SELECT id 
+					FROM authors AS A
+					where A.user_id = :user_id
+				)
+			ORDER BY F.is_friend";
+	$stt = $db->prepare($sql);
+	$stt->bindValue(':user_id', $_GET['id']);
+	$stt->execute();
+} catch (PDOException $e) {
+	die("エラーメッセージ: {$e->getMessage()}");
+}
+?>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>申請者</th><th></th>
+			</tr>	
+		</thead>
+		<tbody>
+
+
+		</tbody>
+	</table>
+	</div>
 </body>
 </html>
