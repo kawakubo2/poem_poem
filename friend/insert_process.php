@@ -10,9 +10,11 @@ try {
     $db = getDb();
     $sql = "SELECT author_id
             FROM friends
-            WHERE author_id = :author_id";
+            WHERE author_id = :author_id
+              AND user_id = :user_id";
     $stt = $db->prepare($sql);
     $stt->bindValue(':author_id', $_POST['author_id']);
+    $stt->bindValue(':user_id', $_SESSION['user']['id']);
     $stt->execute();
     if ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
         $_SESSION['message'] = '既に友達申請しています。';

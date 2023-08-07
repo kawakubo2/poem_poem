@@ -94,14 +94,15 @@ try {
 	<table class="table">
 		<thead>
 			<tr>
-				<th>申請者</th><th></th>
+				<th>申請者</th><th></th><th></th>
 			</tr>	
 		</thead>
 		<tbody>
 <?php while($row = $stt->fetch(PDO::FETCH_ASSOC)) { ?>
 			<tr>
 				<td><?=e($row['username']) ?></td>
-				<td><a href="update_form.php?user_id=<?=e($row['friend_user_id']) ?>&author_id=<?=e($row['friend_author_id']) ?></td>
+				<td><a href="update_form.php?user_id=<?=e($row['friend_user_id']) ?>&author_id=<?=e($row['friend_author_id']) ?>&approval=1">承認</a></td>
+				<td><a href="update_form.php?user_id=<?=e($row['friend_user_id']) ?>&author_id=<?=e($row['friend_author_id']) ?>&approval=2">拒否</a></td>
 			</tr>
 <?php } ?>
 		</tbody>

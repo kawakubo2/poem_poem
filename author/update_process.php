@@ -106,7 +106,7 @@ if (isset($_FILES['profile_image'])) {
         die('エラーメッセージ: ' . $e->getMessage());
     }
 
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/index.php');
+    header("Location: http://" . $_SERVER['HTTP_HOST'] . '/index.php');
 
 }
 
