@@ -5,7 +5,7 @@ require_once '../common/auth.php';
 
 try {
     $db = getDb();
-    $sql = "SELECT id, penname, profile_filepath
+    $sql = "SELECT id, user_id, penname, profile_filepath
             FROM authors
             WHERE id = :author_id";
     $stt = $db->prepare($sql);
@@ -41,7 +41,9 @@ try {
         <a href="../poem/list.php">一覧へ戻る</a>
     <?php } ?>
     <h2>作家詳細</h2>
-    <a href="../friend/insert_form.php?author_id=<?=$_GET['author_id'] ?>">友達申請</a>
+    <?php if($row['user_id'] !== $_SESSION['user']['id']) { ?>
+        <a href="../friend/insert_form.php?author_id=<?=$_GET['author_id'] ?>">友達申請</a>
+    <?php } ?>
     <table class="table">
         <tr><th>ペンネーム</th><td><?=e($row['penname']) ?></td></tr>
         <tr><th></th><td><img src="../images/<?=e($row['profile_filepath']) ?>" /></td></tr>

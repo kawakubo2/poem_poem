@@ -77,7 +77,10 @@ try {
 				   F.author_id AS friend_author_id
 			FROM friends AS F
 				INNER JOIN users AS U ON F.user_id = U.id
-			WHERE F.author_id = 
+			WHERE
+				F.status = '処理待ち'
+				AND
+				F.author_id = 
 				(
 					SELECT id 
 					FROM authors AS A

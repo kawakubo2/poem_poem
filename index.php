@@ -42,6 +42,11 @@ session_start();
     			<li><a href="/user/list.php">ユーザ一覧</a></li>
     			<li><a href="/user/image_form.php?id=<?=$_SESSION['user']['id'] ?>">ユーザ画像</a></li>
     			<li><a href="/author/list.php">作家一覧</a></li>
+				<?php if ($author_id) { ?>
+					<li><a href="/author/update_form.php?id=<?=$_SESSION['user']['id'] ?>">作家編集</a></li>
+				<?php } else { ?>
+					<li><a href="/author/insert_form.php?id=<?=$_SESSION['user']['id'] ?>">作家登録</a></li>
+				<?php } ?>
     			<li><a href="/poem/list.php">ポエム一覧</a></li>
 				<li><a href="/favorite/list.php">お気に入り一覧</a></li>
     		<?php } else { ?>
