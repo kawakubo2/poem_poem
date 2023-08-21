@@ -86,7 +86,7 @@ try {
 					FROM authors AS A
 					where A.user_id = :user_id
 				)
-			ORDER BY F.is_friend";
+			ORDER BY F.status";
 	$stt = $db->prepare($sql);
 	$stt->bindValue(':user_id', $_GET['id']);
 	$stt->execute();
@@ -104,8 +104,22 @@ try {
 <?php while($row = $stt->fetch(PDO::FETCH_ASSOC)) { ?>
 			<tr>
 				<td><?=e($row['username']) ?></td>
-				<td><a href="update_form.php?user_id=<?=e($row['friend_user_id']) ?>&author_id=<?=e($row['friend_author_id']) ?>&approval=1">承認</a></td>
-				<td><a href="update_form.php?user_id=<?=e($row['friend_user_id']) ?>&author_id=<?=e($row['friend_author_id']) ?>&approval=2">拒否</a></td>
+				<td>
+					<form method="POST" action="../friend/update_process.php">
+						<input type="hidden" name="user_id" value="<?=e($row['friend_user_id']) ?>" />
+						<input type="hidden" name="author_id" value="<?=e($row['friend_user_id']) ?>" />
+						<input type="hidden" name="status" value="承認" />
+						<input type="submit" value="承認" />
+					</form>
+				</td>
+				<td>
+					<form method="POST" action="../friend/update_process.php">
+						<input type="hidden" name="user_id" value="<?=e($row['friend_user_id']) ?>" />
+						<input type="hidden" name="author_id" value="<?=e($row['friend_user_id']) ?>" />
+						<input type="hidden" name="status" value="拒否" />
+						<input type="submit" value="拒否" />
+					</form>
+				</td>
 			</tr>
 <?php } ?>
 		</tbody>

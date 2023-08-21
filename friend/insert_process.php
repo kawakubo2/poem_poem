@@ -21,12 +21,13 @@ try {
         header('Location: http://localhost:3000/poem/list.php');
         exit();
     }
-    $sql = "INSERT INTO friends(user_id, author_id, memo, is_friend)
-            VALUES(:user_id, :author_id, :memo, 0)";
+    $sql = "INSERT INTO friends(user_id, author_id, memo, status)
+            VALUES(:user_id, :author_id, :memo, :status)";
     $stt = $db->prepare($sql);
     $stt->bindValue(':user_id', $_SESSION['user']['id']);
     $stt->bindValue(':author_id', $_POST['author_id']);
     $stt->bindValue(':memo', $_POST['memo']);
+    $stt->bindValue(':status', '処理待ち');
     $stt->execute();
     header('Location: http://localhost:3000/poem/list.php');
     exit();
