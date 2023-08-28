@@ -97,7 +97,7 @@ try {
 	<table class="table">
 		<thead>
 			<tr>
-				<th>申請者</th><th></th><th></th>
+				<th>申請者</th><th>&nbsp;&nbsp;&nbsp;</th><th>&nbsp;&nbsp;&nbsp;</th>
 			</tr>	
 		</thead>
 		<tbody>
@@ -107,7 +107,7 @@ try {
 				<td>
 					<form method="POST" action="../friend/update_process.php">
 						<input type="hidden" name="user_id" value="<?=e($row['friend_user_id']) ?>" />
-						<input type="hidden" name="author_id" value="<?=e($row['friend_user_id']) ?>" />
+						<input type="hidden" name="author_id" value="<?=e($row['friend_author_id']) ?>" />
 						<input type="hidden" name="status" value="承認" />
 						<input type="submit" value="承認" />
 					</form>
@@ -115,7 +115,7 @@ try {
 				<td>
 					<form method="POST" action="../friend/update_process.php">
 						<input type="hidden" name="user_id" value="<?=e($row['friend_user_id']) ?>" />
-						<input type="hidden" name="author_id" value="<?=e($row['friend_user_id']) ?>" />
+						<input type="hidden" name="author_id" value="<?=e($row['friend_author_id']) ?>" />
 						<input type="hidden" name="status" value="拒否" />
 						<input type="submit" value="拒否" />
 					</form>
@@ -124,6 +124,26 @@ try {
 <?php } ?>
 		</tbody>
 	</table>
+	</div>
+	<div>
+		<h3>友達リスト</h3>
+<?php
+try {
+	$db = getDb();
+	$sql = "SELECT U.username
+			FROM U AS users
+				INNER JOIN friends AS F ON F.user_id = U.id
+			WHERE F.author_id = 
+				(
+					SELECT author_id
+					FROM authors
+					WHERE user_id = :user_id
+				)";
+	$stt = $db->prepare($sql);
+} catch (PDOException $e) {
+	die("エラーメッセージ: {$e->getMessage()}");
+}
+?>
 	</div>
 </body>
 </html>
