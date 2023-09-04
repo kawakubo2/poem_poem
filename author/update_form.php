@@ -69,7 +69,7 @@ try {
 	</form>
 	<hr>
 	<div>
-		<h3>友達申請</h3>
+		<h3>承認待ち</h3>
 <?php
 try {
 	$db = getDb();
@@ -131,15 +131,47 @@ try {
 try {
 	$db = getDb();
 	$sql = "SELECT U.username
-			FROM U AS users
-				INNER JOIN friends AS F ON F.user_id = U.id
-			WHERE F.author_id = 
-				(
+			FROM users AS U
+				INNER JOIN friends AS F ON U.id = F.user_id
+			WHERE F.status = '承認'
+			  AND F.author_id =
+			  	(
 					SELECT author_id
 					FROM authors
 					WHERE user_id = :user_id
 				)";
 	$stt = $db->prepare($sql);
+	$stt->bindValue(':user_id', $_SESSION['user']['id']);
+	$stt->execute();
+?>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ユーザ名</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+		<?php
+		while ($friend_row = $stt->fetch(PDO::FETCH_ASSOC)) {
+		?>
+				<tr>
+					<td><?=e($friend_row['username'] ) ?></td> 
+					<td>
+						<form method="POST" action="../friend/update_process.php">
+							<input type="hidden" name="user_id" value="<?=e($row['friend_user_id']) ?>" />
+							<input type="hidden" name="author_id" value="<?=e($row['friend_author_id']) ?>" />
+							<input type="hidden" name="status" value="拒否" />
+							<input type="submit" value="拒否" />
+						</form>
+					</td>
+				</tr>
+		<?php
+		}
+		?>
+			</tbody>
+		</table>
+<?php
 } catch (PDOException $e) {
 	die("エラーメッセージ: {$e->getMessage()}");
 }
