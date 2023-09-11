@@ -58,16 +58,22 @@ session_start();
     		<tbody>
     		<?php
     		$db = getDb();
-    		$sql = "SELECT P.id, P.title, A.id AS author_id, A.penname, P.body, A.user_id, FRI.status, FRI.self_author_id, R.poem_id AS favorite, FAV.fav_count
+    		$sql = "SELECT P.id, P.title, A.id AS author_id, A.penname, P.body, A.user_id, FRI.status, R.poem_id AS favorite, FAV.fav_count, LOGIN_AUTHOR.id AS login_author_id
                     FROM poems AS P
                         INNER JOIN authors AS A ON P.author_id = A.id
 						LEFT OUTER JOIN
 						(
-							SELECT author_id AS self_author_id, status
+							SELECT author_id, status
 							FROM friends
 							WHERE user_id = :user_id
 						) AS FRI
-							ON A.id = FRI.self_author_id
+							ON A.id = FRI.author_id
+						LEFT OUTER JOIN (
+							SELECT id
+							FROM authors
+							WHERE user_id = :user_id
+						) AS LOGIN_AUTHOR
+							ON P.author_id = LOGIN_AUTHOR.id
 						LEFT OUTER JOIN
 						(
 							SELECT poem_id, count(*) AS fav_count
@@ -116,7 +122,7 @@ session_start();
 					<?php
 							}
 
-							if ($row['author_id'] != $row['self_author_id']) {
+							if ($row['author_id'] != $row['login_author_id']) {
 					?>
 							<a href="../author/detail.php?author_id=<?=$row['author_id'] ?>">作家</a>
 					<?php
