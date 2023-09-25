@@ -31,7 +31,7 @@ try {
 
 $row = $stt->fetch(PDO::FETCH_ASSOC);
 
-if ($row['拒否回数'] >= 10) {
+if ($row['拒否回数'] >= 3) {
     try {
         $db = getDb();
         $db->beginTransaction();

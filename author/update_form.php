@@ -136,7 +136,7 @@ try {
 			WHERE F.status = '承認'
 			  AND F.author_id =
 			  	(
-					SELECT author_id
+					SELECT id
 					FROM authors
 					WHERE user_id = :user_id
 				)";
