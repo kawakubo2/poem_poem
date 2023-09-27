@@ -130,7 +130,9 @@ try {
 <?php
 try {
 	$db = getDb();
-	$sql = "SELECT U.username
+	$sql = "SELECT U.username, 
+				F.user_id AS friend_user_id, 
+				F.author_id AS friend_author_id
 			FROM users AS U
 				INNER JOIN friends AS F ON U.id = F.user_id
 			WHERE F.status = '承認'
@@ -159,8 +161,8 @@ try {
 					<td><?=e($friend_row['username'] ) ?></td> 
 					<td>
 						<form method="POST" action="../friend/update_process.php">
-							<input type="hidden" name="user_id" value="<?=e($row['friend_user_id']) ?>" />
-							<input type="hidden" name="author_id" value="<?=e($row['friend_author_id']) ?>" />
+							<input type="hidden" name="user_id" value="<?=e($friend_row['friend_user_id']) ?>" />
+							<input type="hidden" name="author_id" value="<?=e($friend_row['friend_author_id']) ?>" />
 							<input type="hidden" name="status" value="拒否" />
 							<input type="submit" value="拒否" />
 						</form>
