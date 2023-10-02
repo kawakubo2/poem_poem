@@ -49,7 +49,6 @@ if ($row['拒否回数'] >= 3) {
         $stt->execute();
         // usersテーブルから削除
         $stt = $db->prepare("DELETE FROM users WHERE id = :user_id");
-        // 2023-09-27 :idを:user_idに修正
         $stt->bindValue(':user_id', $_POST['user_id']);
         $stt->execute();
 
