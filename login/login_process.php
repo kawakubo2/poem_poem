@@ -23,7 +23,7 @@ if (count($errors) === 0) {
 
         if ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
             if ($row['active'] != 1) {
-                die('退会中のためログインできません。');
+                die('退会中または規約によりログインできません。');
             }
             $hash_password = $row['password'];
             if (password_verify($_POST['password'], $hash_password)) {

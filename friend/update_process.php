@@ -47,8 +47,11 @@ if ($row['拒否回数'] >= 3) {
         $stt = $db->prepare("DELETE FROM friends WHERE user_id = :user_id");
         $stt->bindValue(':user_id', $_POST['user_id']);
         $stt->execute();
-        // usersテーブルから削除
-        $stt = $db->prepare("DELETE FROM users WHERE id = :user_id");
+        // 指定したuserを一定期間無効化する(一定期間をどれくらにするかはTODO) 
+        $sql_deactivate = "UPDATE users
+                           SET active = 0
+                           WHERE id = :user_id";
+        $stt = $db->prepare($sql_deactivate);
         $stt->bindValue(':user_id', $_POST['user_id']);
         $stt->execute();
 
