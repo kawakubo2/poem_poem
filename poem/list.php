@@ -58,7 +58,10 @@ session_start();
     		<tbody>
     		<?php
     		$db = getDb();
-    		$sql = "SELECT P.id, P.title, A.id AS author_id, A.penname, P.body, A.user_id, FRI.status, R.poem_id AS favorite, FAV.fav_count, LOGIN_AUTHOR.id AS login_author_id
+    		$sql = "SELECT 
+						P.id, P.title, A.id AS author_id, A.penname, P.body, A.user_id, 
+						FRI.status, R.poem_id AS favorite, FAV.fav_count, 
+						LOGIN_AUTHOR.id AS login_author_id
                     FROM poems AS P
                         INNER JOIN authors AS A ON P.author_id = A.id
 						LEFT OUTER JOIN
@@ -129,7 +132,7 @@ session_start();
 							}
 						}	
 					?>
-    				<?php if (is_login()) { ?>
+    				<?php if (is_login() && $row['status'] === '承認') { ?>
     					<a href="detail.php?id=<?=e($row['id']) ?>&page=poem_list">コメント</a>
     				<?php } ?>
     				<?php if (is_login() && $row['user_id'] === $_SESSION['user']['id']) { ?>
