@@ -179,5 +179,66 @@ try {
 }
 ?>
 	</div>
+	<div>
+		<h3>詩の一覧</h3>
+<?php
+try {
+	$db = getDb();
+	$sql = "SELECT P.id, P.title, P.body, C.comment, U.username
+			FROM poems AS P
+				LEFT OUTER JOIN comments AS C ON P.id = C.poem_id
+				INNER JOIN users AS U ON C.user_id = U.id
+			WHERE P.author_id = 
+			(
+				SELECT id
+				FROM authors
+				WHERE user_id = :user_id
+			)";
+	$stt = $db->prepare($sql);
+	$stt->bindValue(':user_id', $_SESSION['user']['id']);
+	$stt->execute();
+} catch(PDOException $e) {
+	die("エラーメッセージ: {$e->getMessage()}");
+}
+?>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>タイトル</th>
+					<th>詩</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+<?php
+			$poem_id = 0;
+			while($row = $stt->fetch(PDO::FETCH_ASSOC)) {
+?>
+				<tr>
+			<?php
+				if ($row['id'] != $poem_id) {
+			?>
+					<td><?=e($row['title']) ?></td>
+					<td><?=e($row['body']) ?></td>
+					<td><?=e($row['comment']) ?></td>
+					<td><?=e($row['username']) ?></td>
+			<?php
+				} else {
+			?>
+					<td colspan="2"></td>
+					<td><?=e($row['comment']) ?></td>
+					<td><?=e($row['username']) ?></td>
+			<?php
+				}
+				$poem_id = $row['id'];
+			?>
+				</tr>
+<?php
+			}
+?>
+			</tbody>
+		</table>
+	</div>
 </body>
 </html>
