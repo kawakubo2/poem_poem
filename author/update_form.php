@@ -184,7 +184,7 @@ try {
 <?php
 try {
 	$db = getDb();
-	$sql = "SELECT P.id, P.title, P.body, C.comment, U.username
+	$sql = "SELECT P.id, P.title, P.body, C.comment, U.username, U.profile_filepath
 			FROM poems AS P
 				LEFT OUTER JOIN comments AS C ON P.id = C.poem_id
 				INNER JOIN users AS U ON C.user_id = U.id
@@ -208,6 +208,7 @@ try {
 					<th>詩</th>
 					<th></th>
 					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -221,16 +222,17 @@ try {
 			?>
 					<td><?=e($row['title']) ?></td>
 					<td><?=e($row['body']) ?></td>
-					<td><?=e($row['comment']) ?></td>
-					<td><?=e($row['username']) ?></td>
 			<?php
 				} else {
 			?>
 					<td colspan="2"></td>
-					<td><?=e($row['comment']) ?></td>
-					<td><?=e($row['username']) ?></td>
 			<?php
 				}
+			?>
+					<td><?=e($row['comment']) ?></td>
+					<td><?=e($row['username']) ?></td>
+					<td><img src="../images/<?=e($row['profile_filepath']) ?>" height="50" alt="ユーザのプロフィール画像" /></td>
+			<?php
 				$poem_id = $row['id'];
 			?>
 				</tr>
