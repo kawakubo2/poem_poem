@@ -25,6 +25,7 @@ try {
 	<link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 </head>
 <body>
+	<a href="../index.php"><img src="/images/poem_world.png" /></a>
 	<h2>作家一覧</h2>
 	<table class="table table-striped">
 		<thead>

@@ -52,6 +52,7 @@ session_start();
     		<?php } else { ?>
     			<li><a href="/user/update_form.php?id=<?=$_SESSION['user']['id'] ?>&page=index.php">ユーザ編集</a></li>
     			<li><a href="/user/image_form.php?id=<?=$_SESSION['user']['id'] ?>">ユーザ画像</a></li>
+				<li><a href="/user/detail.php">ユーザ詳細</a></li>
     			<li><a href="/author/list.php">作家一覧</a></li>
 				<?php if ($author_id) { ?>
 					<li><a href="/author/update_form.php?id=<?=$_SESSION['user']['id'] ?>">作家編集</a></li>

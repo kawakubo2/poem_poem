@@ -38,6 +38,7 @@ try {
 	<script type="text/javascript" src="insert_form.js"></script>
 </head>
 <body>
+	<a href="../index.php"><img src="/images/poem_world.png" /></a>
 	<h3>作家プロフィール編集</h3>
 	<ul id="error_summary">
 	<?php

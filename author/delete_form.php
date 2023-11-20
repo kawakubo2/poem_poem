@@ -33,6 +33,7 @@ if (isset($_GET['page']) && $_GET['page'] === 'list.php') {
 	<link type="text/css" rel="stylesheet" href="/css/main.css" />
 </head>
 <body>
+	<a href="../index.php"><img src="/images/poem_world.png" /></a>
 	<a class="btn btn-info" href="list.php">一覧へ戻る</a>
 	<h2>作家削除</h2>
 	<table class="table">
