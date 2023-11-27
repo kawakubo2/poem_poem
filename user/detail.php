@@ -51,13 +51,16 @@ try {
         <?php
             try {
                 $db = getDb();
-                $sql = "SELECT penname, profile_filepath
+                $sql = "SELECT id, penname, profile_filepath
                         FROM authors
                         WHERE id IN
                             (
                                 SELECT author_id
                                 FROM friends
-                                WHERE user_id = :user_id
+                                WHERE 
+                                    user_id = :user_id
+                                    AND
+                                    status = '承認'
                             )";
                 $stt = $db->prepare($sql);
                 $stt->bindValue(':user_id', $_SESSION['user']['id']);
@@ -68,8 +71,8 @@ try {
             while ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
         ?>
             <tr>
-                <td><?=e($row['penname']) ?></td>
-                <td><img src="../images/<?=e($row['profile_filepath']) ?>" width="200" /></td>
+                <td><a href="../author/detail.php?author_id=<?=e($row['id']) ?>" ><?=e($row['penname']) ?></a></td>
+                <td><img src="../images/<?=e($row['profile_filepath']) ?>" width="50" /></td>
             </tr>
         <?php
             }

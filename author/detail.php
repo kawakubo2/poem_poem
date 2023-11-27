@@ -36,10 +36,12 @@ try {
 	<link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 </head>
 <body>
-    <a href="../index.php"><img src="/images/poem_world.png" /></a>
+    <a href="../index.php"><img src="/images/poem_world.png" /></a><br>
     <?php if (is_admin()) { ?>
         <a href="../poem/list.php">一覧へ戻る</a>
     <?php } ?>
+    <br>
+    <a href="JavaScript:history.back();">戻る</a>
     <h2>作家詳細</h2>
     <?php if($row['user_id'] !== $_SESSION['user']['id']) { ?>
         <a href="../friend/insert_form.php?author_id=<?=$_GET['author_id'] ?>">友達申請</a>
