@@ -42,7 +42,7 @@ session_start();
     	<form method="GET" action="">
     		<label for="title">タイトル</label>
     		<input type="text" id="title" name="title" />
-    		<label for="penname">ペンネーム: </label>
+    		<label for="penname">作家: </label>
     		<select id="penname" name="penname">
     			<option value=""></option>
     		<?php while ($row = $stt->fetch(PDO::FETCH_ASSOC)) { ?>
@@ -53,7 +53,7 @@ session_start();
     	</form>
     	<table class="table">
     		<thead>
-    			<tr><th>タイトル</th><th>ペンネーム</th><th>詩</th><th>お気に入り数</th><th></th></tr>
+    			<tr><th>タイトル</th><th>作家</th><th>詩</th><th>お気に入り数</th><th></th></tr>
     		</thead>
     		<tbody>
     		<?php

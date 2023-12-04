@@ -38,9 +38,10 @@ try {
 <body>
 	<a href="../index.php"><img src="/images/poem_world.png" /></a>
 	<ul id="error_summary"></ul>
+    <hr>
     <div>
         <h2>友達作家一覧</h2>
-        <table class="tabel">
+        <table class="table">
             <thead>
                 <tr>
                     <th>ペンネーム</th>
@@ -80,5 +81,41 @@ try {
             </tbody>
         </table>
     </div>
+    <hr>
+    <h2>お気に入りの詩一覧</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>タイトル</th><th>作家</th><th>詩</th>
+            </tr>
+        </thead>
+        <tbody>
+<?php
+    try {
+        $db = getDb();
+        $sql = "SELECT P.title, P.body, A.penname
+                FROM favorites AS F
+                    INNER JOIN poems AS P ON F.poem_id = P.id
+                    INNER JOIN authors AS A ON A.id = P.author_id
+                WHERE
+                    F.user_id = :user_id";
+        $stt = $db->prepare($sql);
+        $stt->bindValue(':user_id', $_SESSION['user']['id']);
+        $stt->execute();
+    } catch (PDOException $e) {
+        die("エラーメッセージ: {$e->getMessage()}");
+    }
+    while ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
+?>
+            <tr>
+                <td><?=e($row['title']) ?></td>
+                <td><?=e($row['penname']) ?></td>
+                <td><?=e($row['body']) ?></td>
+            </tr>
+<?php
+    }
+?>
+        </tbody>
+    </table>
 </body>
 </html>

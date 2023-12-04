@@ -3,13 +3,19 @@ require_once '../DbManager.php';
 require_once '../Encode.php';
 require_once '../common/auth.php';
 
+authenticate();
+
 try {
     $db = getDb();
-    $sql = "SELECT id, user_id, penname, profile_filepath
-            FROM authors
-            WHERE id = :author_id";
+    $sql = "SELECT A.id, A.user_id, A.penname, A.profile_filepath, COALESCE(F.status, '') AS status
+            FROM authors AS A
+                LEFT OUTER JOIN friends AS F 
+                    ON A.id = F.author_id AND F.user_id = :user_id
+            WHERE 
+                A.id = :author_id";
     $stt = $db->prepare($sql);
     $stt->bindValue(':author_id', $_GET['author_id']);
+    $stt->bindValue(':user_id', $_SESSION['user']['id']);
     $stt->execute(); 
     if ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
         ;
@@ -43,7 +49,7 @@ try {
     <br>
     <a href="JavaScript:history.back();">戻る</a>
     <h2>作家詳細</h2>
-    <?php if($row['user_id'] !== $_SESSION['user']['id']) { ?>
+    <?php if ($row['status'] === "") { ?>
         <a href="../friend/insert_form.php?author_id=<?=$_GET['author_id'] ?>">友達申請</a>
     <?php } ?>
     <table class="table">
