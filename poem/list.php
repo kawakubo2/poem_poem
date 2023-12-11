@@ -98,6 +98,9 @@ session_start();
     		if (isset($_GET['title']) && $_GET['title'] !== '') {
     		    $sql .= " AND P.title LIKE :title";
     		}
+			$sql .= " AND posted_date >= SUBDATE(CURRENT_DATE(), INTERVAL 30 DAY) 
+					  ORDER BY posted_date DESC";
+
     		$stt = $db->prepare($sql);
 			$stt->bindValue(':user_id', $_SESSION['user']['id']);
     		if (isset($_GET['penname']) && $_GET['penname'] !== '') {

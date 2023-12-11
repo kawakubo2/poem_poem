@@ -93,7 +93,7 @@ try {
 <?php
     try {
         $db = getDb();
-        $sql = "SELECT P.title, P.body, A.penname
+        $sql = "SELECT P.title, P.body, A.id, A.penname
                 FROM favorites AS F
                     INNER JOIN poems AS P ON F.poem_id = P.id
                     INNER JOIN authors AS A ON A.id = P.author_id
@@ -109,7 +109,7 @@ try {
 ?>
             <tr>
                 <td><?=e($row['title']) ?></td>
-                <td><?=e($row['penname']) ?></td>
+                <td><a href="../author/detail.php?author_id=<?=e($row['id']) ?>"><?=e($row['penname']) ?></a></td>
                 <td><?=e($row['body']) ?></td>
             </tr>
 <?php
