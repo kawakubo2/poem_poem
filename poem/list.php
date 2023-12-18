@@ -53,14 +53,14 @@ session_start();
     	</form>
     	<table class="table">
     		<thead>
-    			<tr><th>タイトル</th><th>作家</th><th>詩</th><th>お気に入り数</th><th></th></tr>
+    			<tr><th>タイトル</th><th>作家</th><th>詩</th><th>投稿日</th><th>お気に入り数</th><th></th></tr>
     		</thead>
     		<tbody>
     		<?php
     		$db = getDb();
     		$sql = "SELECT 
 						P.id, P.title, A.id AS author_id, A.penname, P.body, A.user_id, 
-						FRI.status, R.poem_id AS favorite, FAV.fav_count, 
+						P.posted_date, FRI.status, R.poem_id AS favorite, FAV.fav_count, 
 						LOGIN_AUTHOR.id AS login_author_id
                     FROM poems AS P
                         INNER JOIN authors AS A ON P.author_id = A.id
@@ -116,7 +116,8 @@ session_start();
     				<td><?=e($row['title']) ?></td>
     				<td><?=e($row['penname']) ?></td>
     				<td><?=e($row['body']) ?></td>
-					<td><?=($row['fav_count'] === null) ? "": e($row['fav_count']) ?></td>
+					<td><?=e($row['posted_date']) ?></td>
+					<td><?=e($row['fav_count'] === null) ? "": e($row['fav_count']) ?></td>
     				<td>
     				<?php 
 						if (is_login()) { 

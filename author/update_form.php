@@ -181,7 +181,7 @@ try {
 ?>
 	</div>
 	<div>
-		<h3>詩の一覧</h3>
+		<h3>詩とコメントの一覧</h3>
 <?php
 try {
 	$db = getDb();
@@ -208,7 +208,8 @@ try {
 					<th>タイトル</th>
 					<th>詩</th>
 					<th></th>
-					<th></th>
+					<th>コメント</th>
+					<th>ユーザ名</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -223,10 +224,11 @@ try {
 			?>
 					<td><?=e($row['title']) ?></td>
 					<td><?=e($row['body']) ?></td>
+					<td><a href="../poem/repost.php?poem_id=<?=e($row['id']) ?>" >再投稿</a></td>
 			<?php
 				} else {
 			?>
-					<td colspan="2"></td>
+					<td colspan="3"></td>
 			<?php
 				}
 			?>
