@@ -33,6 +33,7 @@ try {
 <head>
 	<meta charset="UTF-8" />
 	<title>作家プロフィール編集 | Poem World</title>
+	<link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 	<link type="text/css" rel="stylesheet" href="/css/main.css" />
 	<script type="text/javascript" src="/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript" src="insert_form.js"></script>
@@ -185,7 +186,8 @@ try {
 <?php
 try {
 	$db = getDb();
-	$sql = "SELECT P.id, P.title, P.body, C.comment, U.username, U.profile_filepath
+	$sql = "SELECT P.id, P.title, P.body, C.comment, U.username, U.profile_filepath,
+			P.posted_date < SUBDATE(CURRENT_DATE(), INTERVAL 30 DAY) AS repost_flag
 			FROM poems AS P
 				LEFT OUTER JOIN comments AS C ON P.id = C.poem_id
 				INNER JOIN users AS U ON C.user_id = U.id
@@ -224,8 +226,12 @@ try {
 			?>
 					<td><?=e($row['title']) ?></td>
 					<td><?=e($row['body']) ?></td>
-					<td><a href="../poem/repost.php?poem_id=<?=e($row['id']) ?>" >再投稿</a></td>
+			<?php if ($row['repost_flag'] == 1) {?>
+					<td><a class="btn btn-secondary" href="../poem/repost.php?poem_id=<?=e($row['id']) ?>" >再投稿</a></td>
+			<?php } else { ?>
+					<td></td>
 			<?php
+				  }
 				} else {
 			?>
 					<td colspan="3"></td>

@@ -34,8 +34,8 @@ try {
     $stt->bindValue(':poem_id', $_GET['poem_id']);
     $stt->execute();
 
-    header('Location: http://localhost/' . $_SERVER['HTTP_HOST']
-        . '/author/update_form.php');
+    header('Location: http://' . $_SERVER['HTTP_HOST']
+        . "/author/update_form.php?id=" . e($_SESSION['user']['id']));
     exit();
 } catch (PDOException $e) {
     die("エラーメッセージ: {$e->getMessage()}");
