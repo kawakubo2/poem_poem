@@ -98,8 +98,9 @@ session_start();
     		if (isset($_GET['title']) && $_GET['title'] !== '') {
     		    $sql .= " AND P.title LIKE :title";
     		}
-			$sql .= " AND posted_date >= SUBDATE(CURRENT_DATE(), INTERVAL 30 DAY) 
+			$sql .= " AND posted_date >= SUBDATE(CURRENT_DATE(), INTERVAL 365 DAY) 
 					  ORDER BY posted_date DESC";
+			// TODO 本番用。上記は開発用で365日以内の詩の一覧を取得するようにしている。
 
     		$stt = $db->prepare($sql);
 			$stt->bindValue(':user_id', $_SESSION['user']['id']);

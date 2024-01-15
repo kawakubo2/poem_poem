@@ -10,24 +10,20 @@ authenticate();
 try {
     $db = getDb();
     $sql = "SELECT 
-                P.id, P.title, A.id AS author_id, A.penname, P.body, A.user_id,
-                P.posted_date, FAV.fav_count
-            FROM favorites AS FAV
-                INNER JOIN poems AS P ON FAV.poem_id = P.id
-            WHERE P.posted_date >= SUBDATE(current_date(), INTERNAL 30 DAY)
-                AND
-                P.poem_id IN
+                P.id, P.title, A.id AS author_id, A.penname, P.body, FAV_COUNT.お気に入り数
+            FROM poems AS P
+                INNER JOIN authors AS A ON P.author_id = A.id
+                LEFT OUTER JOIN
                 (
-                    SELECT poem_id
-                    FROM
-                    (
-                        SELECT poem_id, COUNT(*) AS お気に入り数
-                        FROM favorites
-                        GROUP BY poem_id
-                    ) AS FAV_COUNT
-                    ORDER BY FAV_COUNT.お気に入り数 DESC
-                    LIMIT 5
-                )";
+                    SELECT poem_id, COUNT(*) AS お気に入り数
+                    FROM favorites
+                    GROUP BY poem_id
+                ) AS FAV_COUNT
+                ON P.id = FAV_COUNT.poem_id
+            WHERE P.posted_date >= SUBDATE(current_date(), INTERVAL 365 DAY)
+            ORDER BY FAV_COUNT.お気に入り数 DESC
+            LIMIT 5";
+			// TODO 本番用。上記は開発用で365日以内の詩の一覧を取得するようにしている。
     $stt = $db->prepare($sql);
     $stt->execute();
 } catch(PDOException $e) {

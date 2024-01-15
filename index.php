@@ -48,6 +48,7 @@ session_start();
 					<li><a href="/author/insert_form.php?id=<?=$_SESSION['user']['id'] ?>">作家登録</a></li>
 				<?php } ?>
     			<li><a href="/poem/list.php">ポエム一覧</a></li>
+				<li><a href="/poem/top30.php">ポエムTOP30</a></li>
 				<li><a href="/favorite/list.php">お気に入り一覧</a></li>
     		<?php } else { ?>
     			<li><a href="/user/update_form.php?id=<?=$_SESSION['user']['id'] ?>&page=index.php">ユーザ編集</a></li>
@@ -60,6 +61,7 @@ session_start();
 					<li><a href="/author/insert_form.php?id=<?=$_SESSION['user']['id'] ?>">作家登録</a></li>
 				<?php } ?>
     			<li><a href="/poem/list.php">ポエム一覧</a></li>
+				<li><a href="/poem/top30.php">ポエムTOP30</a></li>
 				<li><a href="/favorite/list.php">お気に入り一覧</a></li>
     		</ul>
     		<?php } ?>
