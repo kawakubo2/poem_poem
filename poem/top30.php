@@ -10,7 +10,8 @@ authenticate();
 try {
     $db = getDb();
     $sql = "SELECT 
-                P.id, P.title, A.id AS author_id, A.penname, P.body, FAV_COUNT.お気に入り数
+                P.id, P.title, A.id AS author_id, A.penname, P.body, FAV_COUNT.お気に入り数,
+                LOGIN_AUTHOR.id AS login_author_id
             FROM poems AS P
                 INNER JOIN authors AS A ON P.author_id = A.id
                 LEFT OUTER JOIN
@@ -20,11 +21,19 @@ try {
                     GROUP BY poem_id
                 ) AS FAV_COUNT
                 ON P.id = FAV_COUNT.poem_id
+                LEFT OUTER JOIN
+                (
+                    SELECT id
+                    FROM authors
+                    WHERE user_id = :user_id
+                ) AS LOGIN_AUTHOR
+                ON P.author_id = LOGIN_AUTHOR.id
             WHERE P.posted_date >= SUBDATE(current_date(), INTERVAL 365 DAY)
             ORDER BY FAV_COUNT.お気に入り数 DESC
             LIMIT 5";
 			// TODO 本番用。上記は開発用で365日以内の詩の一覧を取得するようにしている。
     $stt = $db->prepare($sql);
+    $stt->bindValue(':user_id', $_SESSION['user']['id']);
     $stt->execute();
 } catch(PDOException $e) {
     die("エラーメッセージ: {$e->getMessage()}");
@@ -54,10 +63,15 @@ try {
             <tr>
                 <td><?=$rank ?></td>
                 <td><?=e($row['title']) ?></td>
-                <td><?=e($row['penname']) ?></td>
+                <td>
+                <?php if ($row['author_id'] != $row['login_author_id']) { ?>
+                    <a href="../author/detail.php?author_id=<?=e($row['author_id']) ?>"><?=e($row['penname']) ?></a>
+                <?php } else { ?>
+                    <?=e($row['penname']) ?>
+                <?php } ?>
+                </td>
                 <td><?=e($row['body']) ?></td>
                 <td><?=e($row['お気に入り数']) ?></td>
-                <td></td>
             </tr>
 <?php
             $rank++;

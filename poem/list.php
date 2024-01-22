@@ -124,15 +124,15 @@ session_start();
 						if (is_login()) { 
 							if ($row['favorite']) { 	
 					?>
-								<span>お気に入り登録済</span>
+								<span>いいね済</span>
 					<?php 	} else { ?>
-							<a href="../favorite/favorite.php?id=<?=e($row['id']) ?>&page=poem_list">お気に入り登録</a>
+							<a href="../favorite/favorite.php?id=<?=e($row['id']) ?>&page=poem_list">いいね！</a>
 					<?php
 							}
 
 							if ($row['author_id'] != $row['login_author_id']) {
 					?>
-							<a href="../author/detail.php?author_id=<?=$row['author_id'] ?>">作家</a>
+							<a href="../author/detail.php?author_id=<?=e($row['author_id']) ?>">作家</a>
 					<?php
 							}
 						}	

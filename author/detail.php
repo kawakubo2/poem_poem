@@ -43,10 +43,6 @@ try {
 </head>
 <body>
     <a href="../index.php"><img src="/images/poem_world.png" /></a><br>
-    <?php if (is_admin()) { ?>
-        <a href="../poem/list.php">一覧へ戻る</a>
-    <?php } ?>
-    <br>
     <a href="JavaScript:history.back();">戻る</a>
     <h2>作家詳細</h2>
     <?php if ($row['status'] === "") { ?>
