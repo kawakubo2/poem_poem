@@ -11,7 +11,7 @@ try {
     $db = getDb();
     $sql = "SELECT 
                 P.id, P.title, A.id AS author_id, A.penname, P.body, FAV_COUNT.お気に入り数,
-                LOGIN_AUTHOR.id AS login_author_id
+                LOGIN_AUTHOR.id AS login_author_id, R.poem_id AS favorite
             FROM poems AS P
                 INNER JOIN authors AS A ON P.author_id = A.id
                 LEFT OUTER JOIN
@@ -28,6 +28,13 @@ try {
                     WHERE user_id = :user_id
                 ) AS LOGIN_AUTHOR
                 ON P.author_id = LOGIN_AUTHOR.id
+                LEFT OUTER JOIN
+                (
+                    SELECT poem_id
+                    FROM favorites
+                    WHERE user_id = :user_id
+                ) AS R
+                ON P.id = R.poem_id
             WHERE P.posted_date >= SUBDATE(current_date(), INTERVAL 365 DAY)
             ORDER BY FAV_COUNT.お気に入り数 DESC
             LIMIT 5";
@@ -72,6 +79,19 @@ try {
                 </td>
                 <td><?=e($row['body']) ?></td>
                 <td><?=e($row['お気に入り数']) ?></td>
+                <td>
+                <?php
+                    if ($row['favorite']) {
+                ?>
+                    <span>いいね済</span>
+                <?php
+                    } else {
+                ?>
+                    <a href="../favorite/favorite.php?id=<?=e($row['id']) ?>&page=top30">いいね！</a>
+                <?php
+                    }
+                ?>
+                </td>
             </tr>
 <?php
             $rank++;

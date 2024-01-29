@@ -30,8 +30,14 @@ try {
     $stt->bindValue(':poem_id', e($_GET['id']));
     $stt->execute();
 
+    $page = '';
+    if ($_GET['page'] === 'poem_list') {
+        $page = '/poem/list.php';
+    } else if ($_GET['page'] === 'top30') {
+        $page = '/poem/top30.php';
+    }
     header('Location: http://' . $_SERVER['HTTP_HOST']
-        . '/poem/list.php');
+        . $page);
 } catch(PDOException $e) {
     die('エラーメッセージ: ' . $e->getMessage());
 }
