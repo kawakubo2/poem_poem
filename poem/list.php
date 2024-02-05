@@ -115,7 +115,11 @@ session_start();
     		?>
     			<tr>
     				<td><?=e($row['title']) ?></td>
-    				<td><?=e($row['penname']) ?></td>
+    				<td>
+					<?php if ($ow['author_id'] != $row['login_author_id']) { ?>
+						<a href="../author/detail.php?author_id=<?=e($row['author_id']) ?>"><?=e($row['penname']) ?></a>
+					<?php } ?>
+					</td>
     				<td><?=e($row['body']) ?></td>
 					<td><?=e($row['posted_date']) ?></td>
 					<td><?=e($row['fav_count'] === null) ? "": e($row['fav_count']) ?></td>
@@ -127,12 +131,6 @@ session_start();
 								<span>いいね済</span>
 					<?php 	} else { ?>
 							<a href="../favorite/favorite.php?id=<?=e($row['id']) ?>&page=poem_list">いいね！</a>
-					<?php
-							}
-
-							if ($row['author_id'] != $row['login_author_id']) {
-					?>
-							<a href="../author/detail.php?author_id=<?=e($row['author_id']) ?>">作家</a>
 					<?php
 							}
 						}	
