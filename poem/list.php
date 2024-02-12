@@ -53,7 +53,7 @@ session_start();
     	</form>
     	<table class="table">
     		<thead>
-    			<tr><th>タイトル</th><th>作家</th><th>詩</th><th>投稿日</th><th>お気に入り数</th><th></th></tr>
+    			<tr><th>タイトル</th><th>作家</th><th>詩</th><th>投稿日</th><th>お気に入り数</th><th colspan="4"></th></tr>
     		</thead>
     		<tbody>
     		<?php
@@ -116,16 +116,27 @@ session_start();
     			<tr>
     				<td><?=e($row['title']) ?></td>
     				<td>
-					<?php if ($ow['author_id'] != $row['login_author_id']) { ?>
+					<?php if ($row['author_id'] != $row['login_author_id']) { ?>
 						<a href="../author/detail.php?author_id=<?=e($row['author_id']) ?>"><?=e($row['penname']) ?></a>
+					<?php } else { ?>
+						<span><?=e($row['penname']) ?></span>
 					<?php } ?>
 					</td>
-    				<td><?=e($row['body']) ?></td>
+    				<td>
+					<?php 
+						if (mb_strlen($row['body']) > 20) {
+							$poem_body = mb_substr($row['body'], 0, 20) . '...';
+						} else {
+							$poem_body = $row['body'];
+						}
+					?>
+						<a href="./detail.php?id=<?=e($row['id']) ?>"><?=e($poem_body) ?></a>
+					</td>
 					<td><?=e($row['posted_date']) ?></td>
 					<td><?=e($row['fav_count'] === null) ? "": e($row['fav_count']) ?></td>
     				<td>
     				<?php 
-						if (is_login()) { 
+						if (is_login() && $row['author_id'] != $row['login_author_id']) { 
 							if ($row['favorite']) { 	
 					?>
 								<span>いいね済</span>
@@ -135,12 +146,18 @@ session_start();
 							}
 						}	
 					?>
+					</td>
+					<td>
     				<?php if (is_login() && $row['status'] === '承認') { ?>
     					<a href="detail.php?id=<?=e($row['id']) ?>&page=poem_list">コメント</a>
     				<?php } ?>
+					</td>
+					<td>
     				<?php if (is_login() && $row['user_id'] === $_SESSION['user']['id']) { ?>
     					<a href="update_form.php?id=<?=e($row['id']) ?>&page=poem_list">編集</a>
     				<?php } ?>
+					</td>
+					<td>
     				<?php if (is_login() && $row['user_id'] === $_SESSION['user']['id'] || is_admin()) { ?>
     					<a href="delete_form.php?id=<?=e($row['id']) ?>&page=poem_list">削除</a>
     				<?php } ?>
