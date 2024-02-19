@@ -53,7 +53,7 @@ session_start();
     	</form>
     	<table class="table">
     		<thead>
-    			<tr><th>タイトル</th><th>作家</th><th>詩</th><th>投稿日</th><th>お気に入り数</th><th colspan="4"></th></tr>
+    			<tr><th>タイトル</th><th>作家</th><th>詩</th><th>投稿日</th><th>お気に入り数</th><th colspan="5"></th></tr>
     		</thead>
     		<tbody>
     		<?php
@@ -162,6 +162,11 @@ session_start();
     					<a href="delete_form.php?id=<?=e($row['id']) ?>&page=poem_list">削除</a>
     				<?php } ?>
     				</td>
+					<td>
+					<?php if (is_login()) { ?>
+						<a href="../illegal_post_report/insert_form.php?poem_id=<?=e($row['id']) ?>&user_id=<?=$_SESSION['user']['id'] ?>">不正報告</a>
+					<?php } ?>
+					</td>
     			</tr>
     		<?php
     		}
