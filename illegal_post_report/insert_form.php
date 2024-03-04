@@ -21,22 +21,33 @@ if (!is_login()) {
         <a href="../index.php"><img src="/images/poem_world.png" /></a>
         <a href="../poem/list.php">一覧へ戻る</a>
         <h2>不正報告</h2>
+        <ul id="error_summary">
+        <?php
+            if (isset($_SESSION['illegal_post_report_errors'])) {
+                foreach ($_SESSION['illegal_post_report_errors'] as $error) {
+        ?>
+                    <li><?=e($error) ?></li>
+        <?php
+                }
+            }
+        ?>
+        </ul>
     </header>
     <main>
         <form method="POST" action="insert_process.php">
             <div class="container">
                 <label for="reason">不正と考えた理由や根拠</label><br>
                 <textarea name="reason" id="reason" 
-                            cols="30" rows="10"></textarea>
+                            cols="30" rows="10"><?=e($_SESSION['reason']) ?></textarea>
             </div>
             <div class="container">
                 <label for="source">典拠(書籍名、雑誌名、サイト名等)</label><br>
                 <textarea name="source" id="source" 
-                            cols="30" rows="10"></textarea>
+                            cols="30" rows="10"><?=e($_SESSION['source']) ?></textarea>
             </div>
             <div class="container">
-                <input type="hidden" name="poem_id" value="<?=e($_GET['poem_id']) ?>" />
-                <input type="hidden" name="user_id" value="<?=e($_GET['user_id']) ?>" />
+                <input type="hidden" name="poem_id" value="<?=isset($_GET['poem_id']) ? e($_GET['poem_id']) : e($_SESSION['poem_id']) ?>" />
+                <input type="hidden" name="user_id" value="<?=isset($_GET['user_id']) ? e($_GET['user_id']) : e($_SESSION['user_id']) ?>" />
                 <input type="submit" value="報告" />
             </div>
         </form>
