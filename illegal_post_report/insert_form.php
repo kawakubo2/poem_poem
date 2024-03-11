@@ -21,6 +21,14 @@ if (!is_login()) {
         <a href="../index.php"><img src="/images/poem_world.png" /></a>
         <a href="../poem/list.php">一覧へ戻る</a>
         <h2>不正報告</h2>
+        <p style="color: blue">
+        <!-- 2024-03-18追加予定分 -->$_FILES
+        <?php
+            if (isset($_SESSION['illegal_post_report_success'])) {
+                print($_SESSION['illegal_post_report_success']);
+            }
+        ?>
+        </p>
         <ul id="error_summary">
         <?php
             if (isset($_SESSION['illegal_post_report_errors'])) {
@@ -29,6 +37,7 @@ if (!is_login()) {
                     <li><?=e($error) ?></li>
         <?php
                 }
+                unset($_SESSION['illegal_post_report_errors']);
             }
         ?>
         </ul>
