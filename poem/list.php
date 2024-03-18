@@ -164,7 +164,7 @@ session_start();
     				</td>
 					<td>
 					<?php if (is_login()) { ?>
-						<a href="../illegal_post_report/insert_form.php?poem_id=<?=e($row['id']) ?>&user_id=<?=$_SESSION['user']['id'] ?>">不正報告</a>
+						<a href="../illegal_post_report/insert_form.php?poem_id=<?=e($row['id']) ?>&user_id=<?=$_SESSION['user']['id'] ?>">オリジナリティ？</a>
 					<?php } ?>
 					</td>
     			</tr>

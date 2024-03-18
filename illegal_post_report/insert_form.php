@@ -20,12 +20,17 @@ if (!is_login()) {
     <header>
         <a href="../index.php"><img src="/images/poem_world.png" /></a>
         <a href="../poem/list.php">一覧へ戻る</a>
-        <h2>不正報告</h2>
+        <h2>オリジナリティ？</h2>
         <p style="color: blue">
-        <!-- 2024-03-18追加予定分 -->$_FILES
+        <!-- 2024-03-18追加予定分 -->
         <?php
-            if (isset($_SESSION['illegal_post_report_success'])) {
+            if (isset($_SESSION['illegal_post_report_success']) 
+                   && $_SESSION['illegal_post_poem_id']
+                   && $_SESSION['user_id']) {
                 print($_SESSION['illegal_post_report_success']);
+                unset($_SESSION['illegal_post_report_success']);
+                unset($_SESSION['illegal_post_poem_id']);
+                unset($_SESSION['user_id']);
             }
         ?>
         </p>
@@ -45,7 +50,7 @@ if (!is_login()) {
     <main>
         <form method="POST" action="insert_process.php">
             <div class="container">
-                <label for="reason">不正と考えた理由や根拠</label><br>
+                <label for="reason">似ていると考えた理由や根拠</label><br>
                 <textarea name="reason" id="reason" 
                             cols="30" rows="10"><?=e($_SESSION['reason']) ?></textarea>
             </div>
