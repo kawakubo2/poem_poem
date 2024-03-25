@@ -50,6 +50,7 @@ session_start();
     			<li><a href="/poem/list.php">ポエム一覧</a></li>
 				<li><a href="/poem/top30.php">ポエムTOP30</a></li>
 				<li><a href="/favorite/list.php">お気に入り一覧</a></li>
+				<li><a href="/illegal_post_report/list.php">報告一覧</a></li>
     		<?php } else { ?>
     			<li><a href="/user/update_form.php?id=<?=$_SESSION['user']['id'] ?>&page=index.php">ユーザ編集</a></li>
     			<li><a href="/user/image_form.php?id=<?=$_SESSION['user']['id'] ?>">ユーザ画像</a></li>
