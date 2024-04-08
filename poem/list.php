@@ -162,12 +162,7 @@ session_start();
     					<a href="delete_form.php?id=<?=e($row['id']) ?>&page=poem_list">削除</a>
     				<?php } ?>
     				</td>
-					<td>
-					<?php if (is_login()) { ?>
-						<a href="../illegal_post_report/insert_form.php?poem_id=<?=e($row['id']) ?>&user_id=<?=$_SESSION['user']['id'] ?>">オリジナリティ？</a>
-					<?php } ?>
-					</td>
-    			</tr>
+				</tr>
     		<?php
     		}
     		?>

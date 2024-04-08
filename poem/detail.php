@@ -64,8 +64,20 @@ try {
 			</td>
 		</tr>
 	</table>
+	<div>
+		<?php if (is_login()) { ?>
+			<a href="../illegal_post_report/insert_form.php?poem_id=<?=e($row['id']) ?>&user_id=<?=$_SESSION['user']['id'] ?>">オリジナリティ？</a>
+		<?php } ?>
+	</div>
+</section>
 	<section class="section-center">
 		<h3>コメント</h3>
+		<form method="POST" action="/comment/insert_process.php">
+			<input type="hidden" name="poem_id" value="<?=e($_SESSION['insert_poem_id']) ?>" />
+			<textarea rows="5" cols="40"
+				name="comment" id="comment"></textarea>
+			<input type="submit" value="追加" />
+		</form>
 		<?php
 		try {
 		    $db = getDb();
@@ -73,7 +85,8 @@ try {
                     FROM comments AS C
                         INNER JOIN users as U
                         ON C.user_id = U.id
-                    WHERE C.poem_id = :poem_id";
+                    WHERE C.poem_id = :poem_id
+					ORDER BY created_at DESC";
 		    $stt = $db->prepare($sql);
 		    $stt->bindValue(':poem_id', $_SESSION['insert_poem_id']);
 		    $stt->execute();
@@ -99,13 +112,5 @@ try {
 		<?php
 		}
 		?>
-		<form method="POST" action="/comment/insert_process.php">
-			<input type="hidden" name="poem_id" value="<?=e($_SESSION['insert_poem_id']) ?>" />
-			<label for="comment">コメント: </label>
-			<textarea rows="5" cols="40"
-				name="comment" id="comment"></textarea>
-			<input type="submit" value="追加" />
-		</form>
-	</section>
 </body>
 </html>
