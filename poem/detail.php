@@ -67,6 +67,7 @@ try {
 	<div>
 		<?php if (is_login()) { ?>
 			<a href="../illegal_post_report/insert_form.php?poem_id=<?=e($row['id']) ?>&user_id=<?=$_SESSION['user']['id'] ?>">オリジナリティ？</a>
+			<a href="../terms_of_use_violation/insert_form.php?poem_id=<?=e($row['id']) ?>&user_id=<?=$_SESSION['user']['id'] ?>">利用規約違反？</a>
 		<?php } ?>
 	</div>
 </section>
