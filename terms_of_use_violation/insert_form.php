@@ -13,6 +13,7 @@ if (!is_login()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/main.css" />
     <title>利用規約違反 | Poem World</title>
 </head>
 <body>
@@ -25,6 +26,7 @@ if (!is_login()) {
             foreach ($_SESSION['terms_of_use_violation_errors'] as $error) {
                 print("<li>{$error}</li>");
             }
+            unset($_SESSION['terms_of_use_violation_errors']);
         }
         ?>
         </ul>
@@ -34,7 +36,7 @@ if (!is_login()) {
             <div class="container">
                 <label for="comment">利用規約違反と考えた理由</label>
                 <textarea name="reason" id="reason" cols="50" 
-                    rows="10"><?=e($_SESSION['reason']) ?></textarea>
+                    rows="10"><?=isset($_SESSION['reason']) ? e($_SESSION['reason']) : '' ?></textarea>
             </div>
             <div>
                 <input type="hidden" name="poem_id" 

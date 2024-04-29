@@ -9,6 +9,8 @@ if (!is_login()) {
 }
 
 $_SESSION['reason'] = $_POST['reason'];
+$_SESSION['poem_id'] = $_POST['poem_id'];
+$_SESSION['user_id'] = $_POST['user_id'];
 
 $errors = [];
 
@@ -23,5 +25,29 @@ if (trim($_SESSION['reason']) === '') {
 if (count($errors) > 0) {
     $_SESSION['terms_of_use_violation_errors'] = $errors;
     header('Location: http://' . $_SERVER['HTTP_HOST']
-        . $_SERVER['PHP_SELF'] . '/insert_form.php');
+        . '/terms_of_use_violation/insert_form.php');
+    exit();
+}
+
+try {
+    $db = getDb();
+    $sql = "INSERT INTO terms_of_use_violations(poem_id, user_id, reason)
+            VALUES(:poem_id, :user_id, :reason)";
+    $stt = $db->prepare($sql);
+    $stt->bindValue(':poem_id', $_SESSION['poem_id']);
+    $stt->bindValue(':user_id', $_SESSION['user_id']);
+    $stt->bindValue('reason', $_SESSION['reason']);
+    $stt->execute();
+    
+    header('Location: http://' . $_SERVER['HTTP_HOST']
+        . '/poem/detail.php');
+
+    unset($_SESSION['poem_id']);
+    unset($_SESSION['user_id']);
+    unset($_SESSION['reason']);
+
+    exit();
+
+} catch (PDOException $e) {
+    die("エラーメッセージ: {$e->getMessage()}");
 }
