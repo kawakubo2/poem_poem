@@ -3,6 +3,10 @@ require_once '../DbManager.php';
 require_once '../common/auth.php';
 session_start();
 
+// print('<pre>');
+// print_r($_FILES);
+// print('</pre>');
+
 $_SESSION['update_penname'] = $_POST['penname'];
 
 authenticate();
@@ -60,7 +64,8 @@ if (isset($_FILES['profile_image'])) {
 
     $perm = ['gif', 'jpg', 'jpeg', 'png'];
 
-    if (isset($_FILES['profile_image']['error'])) {
+    // 2024-06-03 授業後変更
+    if ($_FILES['profile_image']['size'] > 0) {
         if ($_FILES['profile_image']['error'] !== UPLOAD_ERR_OK) {
             $msg = [
                 UPLOAD_ERR_INI_SIZE => 'php.iniのupload_max_filesize制限を超えています。',
@@ -83,30 +88,30 @@ if (isset($_FILES['profile_image'])) {
                 $errors[] = 'アップロード処理に失敗しました。';
             }
         }
+        if (count($errors) > 0) {
+            $_SESSION['author_update_errors'] = $errors;
+            header('Location: http://' . $_SERVER['HTTP_HOST']
+                . dirname($_SERVER['PHP_SELF']) . "/update_form.php?id={$_SESSION['user']['id']}");
+            exit();
+        }
+        try {
+            $db = getDb();
+            $sql = "UPDATE authors
+                SET profile_filepath = :profile_filepath
+                WHERE user_id = :user_id";
+            $stt = $db->prepare($sql);
+            $stt->bindValue(':profile_filepath', $_FILES['profile_image']['name']);
+            $stt->bindValue(':user_id', $_SESSION['user']['id']);
+            $stt->execute();
+            unset($_SESSION['user_id']);
+        } catch(PDOException $e) {
+            die('エラーメッセージ: ' . $e->getMessage());
+        }
     }
 
-    if (count($errors) > 0) {
-        $_SESSION['author_update_errors'] = $errors;
-        header('Location: http://' . $_SERVER['HTTP_HOST']
-            . dirname($_SERVER['PHP_SELF']) . '/update_form.php');
-        exit();
-    }
 
-    try {
-        $db = getDb();
-        $sql = "UPDATE authors
-            SET profile_filepath = :profile_filepath
-            WHERE user_id = :user_id";
-        $stt = $db->prepare($sql);
-        $stt->bindValue(':profile_filepath', $_FILES['profile_image']['name']);
-        $stt->bindValue(':user_id', $_SESSION['user']['id']);
-        $stt->execute();
-        unset($_SESSION['user_id']);
-    } catch(PDOException $e) {
-        die('エラーメッセージ: ' . $e->getMessage());
-    }
 
-    header("Location: http://" . $_SERVER['HTTP_HOST'] . '/index.php');
+    header("Location: http://" . $_SERVER['HTTP_HOST'] . "/author/update_form.php?id={$_SESSION['user']['id']}");
 
 }
 

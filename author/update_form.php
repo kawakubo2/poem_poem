@@ -23,7 +23,7 @@ try {
         $_SESSION['update_old_penname'] = $row['penname'];
         $_SESSION['update_profile_filepath'] = $row['profile_filepath'];
     }
-    authorize($_SESSION['update_user_id']);
+    // authorize($_SESSION['update_user_id']);
 } catch(PDOException $e) {
     die('エラーメッセージ: ' . $e->getMessage());
 }
