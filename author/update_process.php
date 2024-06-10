@@ -109,9 +109,9 @@ if (isset($_FILES['profile_image'])) {
         }
     }
 
-
-
-    header("Location: http://" . $_SERVER['HTTP_HOST'] . "/author/update_form.php?id={$_SESSION['user']['id']}");
+    $_SESSION['author_update_success_message'] = '更新しました。';
+    header("Location: http://" . $_SERVER['HTTP_HOST'] 
+        . dirname($_SERVER['PHP_SELF']) . "/update_form.php?id={$_SESSION['user']['id']}");
 
 }
 

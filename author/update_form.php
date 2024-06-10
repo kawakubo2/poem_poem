@@ -41,6 +41,14 @@ try {
 <body>
 	<a href="../index.php"><img src="/images/poem_world.png" /></a>
 	<h3>作家プロフィール編集</h3>
+	<p id="message">
+		<?php
+		if (isset($_SESSION['author_update_success_message'])) {
+			print($_SESSION['author_update_success_message']);
+			unset($_SESSION['author_update_success_message']);
+		}
+		?>
+	</p>
 	<ul id="error_summary">
 	<?php
 	if (isset($_SESSION['author_update_errors'])) {
