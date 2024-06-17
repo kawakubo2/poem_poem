@@ -56,5 +56,6 @@ if (isset($_FILES['upfile'])) {
     }
     $_SESSION['upload_message'] = '画像' . $_POST['process_name'] .'のアップロードに成功しました。';
     // 2023-03-06 $_SESSION['page']から'/user/.php'へ変更
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/user/image_form.php');
+    header('Location: http://' . $_SERVER['HTTP_HOST'] 
+        . "/user/update_form.php?id={$_SESSION['upload_user_id']}");
 }

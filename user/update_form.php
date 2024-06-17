@@ -68,10 +68,6 @@ if (isset($_GET['page']) &&
 	}
 	?>
 	</ul>
-	<div>
-		<img src="/images/<?=(mb_convert_encoding($_SESSION['update_profile_filepath'], 'SJIS-WIN', 'UTF-8')) ?>" /><br>
-		<a href="image_form.php?id=<?=isset($_SESSION['update_id']) ? e($_SESSION['update_id']) : '' ?>&page=/user/update_form.php">画像差替え</a>
-	</div>
 	<form method="POST" action="update_process.php">
 		<div class="container">
 			<label for="username">ユーザ名:</label><br>
@@ -83,6 +79,11 @@ if (isset($_GET['page']) &&
     		<input type="text" id="name" name="name"
     					value="<?=isset($_SESSION['update_name']) ? e($_SESSION['update_name']) : '' ?>" />
     	</div>
+		<div class="container">
+			<img src="/images/<?=(mb_convert_encoding($_SESSION['update_profile_filepath'], 'SJIS-WIN', 'UTF-8')) ?>" width="300" /><br>
+			<label>画像差し替え: <br>
+			<input type="file" id="profile_image" name="profile_image" /></label>
+		</div>
     	<div class="container">
     		<label for="email">Eメールアドレス:</label><br>
     		<input type="text" id="email" name="email"
