@@ -68,7 +68,8 @@ if (isset($_GET['page']) &&
 	}
 	?>
 	</ul>
-	<form method="POST" action="update_process.php">
+	<form method="POST" action="update_process.php"
+		enctype="multipart/form-data">
 		<div class="container">
 			<label for="username">ユーザ名:</label><br>
 			<input type="text" id="username" name="username"

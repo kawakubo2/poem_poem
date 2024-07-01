@@ -4,6 +4,11 @@ require_once '../common/auth.php';
 
 session_start();
 
+    print("--- debug1 ---");
+    print("<pre>");
+    print_r($_FILES);
+    print("</pre>");
+
 if (!is_admin() && $_SESSION['update_id'] !== $_SESSION['user']['id']) {
     die('権限がありません');
 }
@@ -73,13 +78,6 @@ try {
     unset($_SESSION['update_role']);
 
     $_SESSION['update_success_message'] = 'ユーザの更新に成功しました。';
-    if (is_admin()) {
-        header('Location: http://' . $_SERVER['HTTP_HOST'] .
-            dirname($_SERVER['PHP_SELF']) . '/list.php');
-    } else if (is_user()) {
-        header('Location: http://' . $_SERVER['HTTP_HOST'] .
-            '/update_form.php');
-    }
 
     // 2024-06-17
     // ここでexit()してはいけない
@@ -95,7 +93,12 @@ if (isset($_FILES['profile_image'])) {
     $perm = ['gif', 'jpg', 'jpeg', 'png'];
 
     // 2024-06-03 授業後変更
+    print("--- debug3 ---");
+    print("<pre>");
+    print_r($_FILES['profile_image']);
+    print("</pre>");
     if ($_FILES['profile_image']['size'] > 0) {
+        print("--- debug4 ---");
         if ($_FILES['profile_image']['error'] !== UPLOAD_ERR_OK) {
             $msg = [
                 UPLOAD_ERR_INI_SIZE => 'php.iniのupload_max_filesize制限を超えています。',
@@ -142,5 +145,13 @@ if (isset($_FILES['profile_image'])) {
     $_SESSION['user_update_success_message'] = '更新しました。';
     header("Location: http://" . $_SERVER['HTTP_HOST'] 
         . dirname($_SERVER['PHP_SELF']) . "/update_form.php?id={$_SESSION['user']['id']}");
-    exit();
 }
+
+if (is_admin()) {
+    header('Location: http://' . $_SERVER['HTTP_HOST'] .
+        dirname($_SERVER['PHP_SELF']) . '/list.php');
+} else if (is_user()) {
+    header('Location: http://' . $_SERVER['HTTP_HOST'] .
+        dirname($_SERVER['PHP_SELF']) . "/update_form.php?id={$_SESSION['user']['id']}");
+}
+exit();
