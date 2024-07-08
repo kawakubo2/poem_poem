@@ -52,7 +52,7 @@ if (trim(str_replace('　', '', $_SESSION['update_email'])) === '') {
 if (count($errors) > 0) {
     $_SESSION['update_user_errors'] = $errors;
     header('Location: http://' . $_SERVER['HTTP_HOST']
-        . dirname($_SERVER['PHP_SELF']) . '/update_form.php');
+        . dirname($_SERVER['PHP_SELF']) . "/update_form.php?id={$_SESSION['user']['id']}");
     exit();
 }
 
@@ -71,11 +71,11 @@ try {
     $stt->bindValue(':id', $_SESSION['update_id']);
     $stt->execute();
 
-    unset($_SESSION['update_id']);
-    unset($_SESSION['update_username']);
-    unset($_SESSION['update_name']);
-    unset($_SESSION['update_email']);
-    unset($_SESSION['update_role']);
+    // unset($_SESSION['update_id']);
+    // unset($_SESSION['update_username']);
+    // unset($_SESSION['update_name']);
+    // unset($_SESSION['update_email']);
+    // unset($_SESSION['update_role']);
 
     $_SESSION['update_success_message'] = 'ユーザの更新に成功しました。';
 
@@ -136,20 +136,18 @@ if (isset($_FILES['profile_image'])) {
             $stt->bindValue(':profile_filepath', $_FILES['profile_image']['name']);
             $stt->bindValue(':user_id', $_SESSION['user']['id']);
             $stt->execute();
-            unset($_SESSION['user_id']);
+            // unset($_SESSION['user_id']);
         } catch(PDOException $e) {
             die('エラーメッセージ: ' . $e->getMessage());
         }
     }
 
     $_SESSION['user_update_success_message'] = '更新しました。';
-    header("Location: http://" . $_SERVER['HTTP_HOST'] 
-        . dirname($_SERVER['PHP_SELF']) . "/update_form.php?id={$_SESSION['user']['id']}");
 }
 
 if (is_admin()) {
     header('Location: http://' . $_SERVER['HTTP_HOST'] .
-        dirname($_SERVER['PHP_SELF']) . '/list.php');
+        dirname($_SERVER['PHP_SELF']) . "/list.php?id={$_SESSION['user']['id']}");
 } else if (is_user()) {
     header('Location: http://' . $_SERVER['HTTP_HOST'] .
         dirname($_SERVER['PHP_SELF']) . "/update_form.php?id={$_SESSION['user']['id']}");

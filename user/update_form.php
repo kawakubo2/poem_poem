@@ -10,9 +10,8 @@ if (!(is_admin() || ($_GET['id'] == $_SESSION['user']['id']
     die('権限がありません');
 }
 
-if (isset($_GET['page']) && 
-		(
-			$_GET['page'] === 'list.php' || $_GET['page'] === 'index.php')) {
+// if (isset($_GET['page']) && 
+// 		($_GET['page'] === 'list.php' || $_GET['page'] === 'index.php')) {
     try {
         $db = getDb();
         $sql = "SELECT id, username, name, email, profile_filepath, role, active
@@ -38,7 +37,7 @@ if (isset($_GET['page']) &&
     } catch (PDOException $e) {
         die('エラーメッセージ:' . $e->getMessage());
     }
-}
+// }
 
 ?>
 <!DOCTYPE html>
@@ -56,6 +55,14 @@ if (isset($_GET['page']) &&
 	<?php } ?>
 
 	<h2>ユーザ編集</h2>
+	<p id="message">
+	<?php
+	if (isset($_SESSION['user_update_success_message'])) {
+		print(e($_SESSION['user_update_success_message']));
+		unset($_SESSION['user_update_success_message']);
+	}
+	?>
+	</p>
 	<ul id="error_summary">
 	<?php
 	if (isset($_SESSION['update_user_errors'])) {
@@ -91,6 +98,7 @@ if (isset($_GET['page']) &&
     					value="<?=isset($_SESSION['update_email']) ? e($_SESSION['update_email']) : '' ?>" />
     	</div>
     	<div class="container">
+			<input type="hidden" name="id" value="<?=e($_SESSION['user']['id']) ?>" />
     		<input type="submit" value="更新" />
     	</div>
 	</form>
