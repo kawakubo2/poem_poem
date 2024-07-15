@@ -98,10 +98,20 @@ session_start();
     		if (isset($_GET['title']) && $_GET['title'] !== '') {
     		    $sql .= " AND P.title LIKE :title";
     		}
-			$sql .= " AND posted_date >= SUBDATE(CURRENT_DATE(), INTERVAL 365 DAY) 
-					  ORDER BY posted_date DESC";
+			$sql .= "   AND posted_date >= SUBDATE(CURRENT_DATE(), INTERVAL 365 DAY)
+					    AND NOT EXISTS
+						(
+							SELECT 1
+							FROM terms_of_use_violations AS TUV
+								INNER JOIN poems
+									ON TUV.poem_id = poems.id
+								INNER JOIN authors AS A
+									ON poems.author_id = A.id
+							WHERE TUV.user_id = :user_id
+								AND A.id = P.author_id
+						)
+					  	ORDER BY posted_date DESC";
 			// TODO 本番用。上記は開発用で365日以内の詩の一覧を取得するようにしている。
-
     		$stt = $db->prepare($sql);
 			$stt->bindValue(':user_id', $_SESSION['user']['id']);
     		if (isset($_GET['penname']) && $_GET['penname'] !== '') {
