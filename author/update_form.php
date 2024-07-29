@@ -79,6 +79,10 @@ try {
 	</form>
 	<hr>
 	<div>
+		<a href="activity.php?author_id=<?=$_SESSION['update_author_id'] ?>">作家活動編集</a>
+	</div>
+	<hr>
+	<div>
 		<h3>承認待ち</h3>
 <?php
 try {
@@ -255,6 +259,51 @@ try {
 				</tr>
 <?php
 			}
+?>
+			</tbody>
+		</table>
+	</div>
+	<div>
+		<h3>利用規約違反</h3>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>詩のタイトル</th>
+					<th>詩</th>
+					<th>違反理由</th>
+					<th>報告日</th>
+				</tr>
+			</thead>
+			<tbody>
+<?php
+	try {
+		$sql_terms_of_use = "
+			SELECT P.id, P.title, CONCAT(SUBSTR(p.body, 1, 30), '...') AS body, 
+			T.reason, T.posted_date
+			FROM terms_of_use_violations AS T
+				INNER JOIN poems AS P
+					ON T.poem_id = P.id
+				INNER JOIN authors AS A
+					ON P.author_id = A.id
+			WHERE A.user_id = :user_id";
+		$stt_terms_of_use = $db->prepare($sql_terms_of_use);
+		$stt_terms_of_use->bindValue(':user_id', $_SESSION['user']['id']);
+		$stt_terms_of_use->execute();
+	} catch(PDOException $e) {
+		die("エラーメッセージ: {$e->getMessage()}");
+	}
+	while ($row_terms_of_use = $stt_terms_of_use->fetch(PDO::FETCH_ASSOC)) {
+?>
+			<tr>
+				<td><?=$row_terms_of_use['id'] ?></td>
+				<td><?=$row_terms_of_use['title'] ?></td>
+				<td><?=$row_terms_of_use['body'] ?></td>
+				<td><?=$row_terms_of_use['reason'] ?></td>
+				<td><?=$row_terms_of_use['posted_date'] ?></td>
+			</tr>
+<?php
+	}
 ?>
 			</tbody>
 		</table>
