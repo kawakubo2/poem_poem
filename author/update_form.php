@@ -9,7 +9,7 @@ authenticate();
 
 try {
     $db = getDb();
-    $sql = "SELECT id, user_id, penname, profile_filepath
+    $sql = "SELECT id, user_id, penname, profile_filepath, activity
             FROM authors
             WHERE user_id = :user_id";
     $stt = $db->prepare($sql);
@@ -22,6 +22,7 @@ try {
         $_SESSION['update_penname'] = $row['penname'];
         $_SESSION['update_old_penname'] = $row['penname'];
         $_SESSION['update_profile_filepath'] = $row['profile_filepath'];
+        $_SESSION['update_activity'] = $row['activity'];
     }
     // authorize($_SESSION['update_user_id']);
 } catch(PDOException $e) {
@@ -72,15 +73,16 @@ try {
 			<input type="file" id="profile_image" name="profile_image" />
 		</div>
 		<div class="container">
+			<label for="activity">作家活動</label><br>
+			<textarea id="activity" name="activity"
+				rows="8" cols="60"><?=isset($_SESSION['update_acitivity']) ? e($_SESSION['update_activity']) : '' ?></textarea>
+		</div>
+		<div class="container">
 			<input type="hidden" name="max_file_size" value="300000" />
 			<input type="hidden" name="user_id" value="<?=$_SESSION['update_user_id'] ?>" />
 			<input type="submit" value="更新" />
 		</div>
 	</form>
-	<hr>
-	<div>
-		<a href="activity.php?author_id=<?=$_SESSION['update_author_id'] ?>">作家活動編集</a>
-	</div>
 	<hr>
 	<div>
 		<h3>承認待ち</h3>

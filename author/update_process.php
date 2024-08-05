@@ -3,11 +3,8 @@ require_once '../DbManager.php';
 require_once '../common/auth.php';
 session_start();
 
-// print('<pre>');
-// print_r($_FILES);
-// print('</pre>');
-
 $_SESSION['update_penname'] = $_POST['penname'];
+$_SESSION['update_activity'] = $_POST['activity'];
 
 authenticate();
 authorize($_SESSION['update_user_id']);
@@ -46,10 +43,11 @@ if (count($errors) > 0) {
 try {
     $db = getDb();
     $sql = "UPDATE authors
-        SET penname = :penname
-        WHERE user_id = :user_id";
+            SET penname = :penname, activity = :activity
+            WHERE user_id = :user_id";
     $stt = $db->prepare($sql);
     $stt->bindValue(':penname', $_SESSION['update_penname']);
+    $stt->bindValue(':activity', $_SESSION['update_activity']);
     $stt->bindValue(':user_id', $_SESSION['user']['id']);
     $stt->execute();
     unset($_SESSION['update_penname']);
