@@ -37,7 +37,7 @@ try {
 		?>
 			<tr>
 				<td><?=e($row['id']) ?></td>
-				<td><?=e($row['penname']) ?></td>
+				<td><a href="detail.php?author_id=<?=e($row['id']) ?>"><?=e($row['penname']) ?></a></td>
 				<td><img src="/images/<?=e($row['profile_filepath']) ?>" width="200"
 						alt="<?=e($row['penname']) ?>のプロフィール写真" /></td>
 				<td>

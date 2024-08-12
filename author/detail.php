@@ -7,7 +7,7 @@ authenticate();
 
 try {
     $db = getDb();
-    $sql = "SELECT A.id, A.user_id, A.penname, A.profile_filepath, COALESCE(F.status, '') AS status
+    $sql = "SELECT A.id, A.user_id, A.penname, A.profile_filepath, COALESCE(F.status, '') AS status, A.activity
             FROM authors AS A
                 LEFT OUTER JOIN friends AS F 
                     ON A.id = F.author_id AND F.user_id = :user_id
@@ -50,7 +50,8 @@ try {
     <?php } ?>
     <table class="table">
         <tr><th>ペンネーム</th><td><?=e($row['penname']) ?></td></tr>
-        <tr><th></th><td><img src="../images/<?=e($row['profile_filepath']) ?>" /></td></tr>
+        <tr><th>プロフィール画像</th><td><img src="../images/<?=e($row['profile_filepath']) ?>" /></td></tr>
+        <tr><th>作家活動</th><td id="activity"><pre><?=e($row['activity']) ?></pre></td></tr>
     </table>
     <hr>
     <table class="table">

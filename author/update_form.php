@@ -75,7 +75,7 @@ try {
 		<div class="container">
 			<label for="activity">作家活動</label><br>
 			<textarea id="activity" name="activity"
-				rows="8" cols="60"><?=isset($_SESSION['update_acitivity']) ? e($_SESSION['update_activity']) : '' ?></textarea>
+				rows="8" cols="60"><?=isset($_SESSION['update_activity']) ? e($_SESSION['update_activity']) : '' ?></textarea>
 		</div>
 		<div class="container">
 			<input type="hidden" name="max_file_size" value="300000" />
